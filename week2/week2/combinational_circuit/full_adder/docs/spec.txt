@@ -1,0 +1,10 @@
+// MODULE     : full_adder
+// FUNCTION   : Add two 1-bit inputs + carry_in, produce sum and carry_out
+// INPUTS     : a, b (1-bit), cin (carry in)
+// OUTPUTS    : sum, cout (carry out)
+// STRUCTURE  : Two half_adders + one OR gate
+// CORNER CASES:
+//   - all inputs 0        → sum=0, cout=0
+//   - all inputs 1        → sum=1, cout=1  (max carry)
+//   - only cin=1, a=b=0   → sum=1, cout=0  (carry passes through)
+//   - a=b=1, cin=0        → sum=0, cout=1
