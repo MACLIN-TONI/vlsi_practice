@@ -1,0 +1,6 @@
+MODULE: 2 input Mux
+FUNCTION: output based on selecting inputs
+INPUT: a, b, sel (1 bit each)
+OUTPUT: out (1 bit)
+CASES: if sel 0 -> choose the value of 'a' as output
+       if sel:1 -> choose the value of 'b' as output
