@@ -32,7 +32,7 @@ module tb_mux_2to1_procedural;
                 passed=passed+1;
             end
             else begin
-                $display("FAILED: a=%b b=%b sel=%b out=%b | exp_out=5%b", a,b,sel,out,exp_out);
+                $display("FAILED: a=%b b=%b sel=%b out=%b | exp_out=%b", a,b,sel,out,exp_out);
                 failed=failed+1;
             end
         end
