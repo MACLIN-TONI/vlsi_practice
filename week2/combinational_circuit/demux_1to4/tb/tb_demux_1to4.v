@@ -54,7 +54,7 @@ module tb_demux_1to4;
         end
     endtask
 
-    task boarder;
+    task boundary;
         input t_in;
         input [1:0] t_sel;
         begin
@@ -151,8 +151,8 @@ module tb_demux_1to4;
     initial begin
         normal();
 
-        boarder(1,2'b11);
-        boarder(0,2'b00);
+        boundary(1,2'b11);
+        boundary(0,2'b00);
 
         diff_control(1'b1);
         diff_control(1'b0);

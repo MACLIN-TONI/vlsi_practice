@@ -1,5 +1,5 @@
 $date
-	Fri May 29 14:41:40 2026
+	Fri May 29 15:40:36 2026
 $end
 $version
 	Icarus Verilog
@@ -28,7 +28,7 @@ $var reg 1 # b $end
 $var reg 1 " c $end
 $var reg 1 ! d $end
 $upscope $end
-$scope task boarder $end
+$scope task boundary $end
 $var reg 1 . t_in $end
 $var reg 2 / t_sel [1:0] $end
 $upscope $end
