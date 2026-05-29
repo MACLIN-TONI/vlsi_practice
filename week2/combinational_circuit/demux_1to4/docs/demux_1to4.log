@@ -1,0 +1,33 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+Normal Case
+PASS: in=0 sel=00 | a=0 b=0 c=0 d=0
+PASS: in=0 sel=01 | a=0 b=0 c=0 d=0
+PASS: in=0 sel=10 | a=0 b=0 c=0 d=0
+PASS: in=0 sel=11 | a=0 b=0 c=0 d=0
+PASS: in=1 sel=00 | a=1 b=0 c=0 d=0
+PASS: in=1 sel=01 | a=0 b=1 c=0 d=0
+PASS: in=1 sel=10 | a=0 b=0 c=1 d=0
+PASS: in=1 sel=11 | a=0 b=0 c=0 d=1
+Boarder Case
+PASS: in=1 sel=11 | a=0 b=0 c=0 d=1
+Boarder Case
+PASS: in=0 sel=00 | a=0 b=0 c=0 d=0
+diff_control Case
+PASS: in=1 sel=00 | a=1 b=0 c=0 d=0
+PASS: in=1 sel=01 | a=0 b=1 c=0 d=0
+PASS: in=1 sel=10 | a=0 b=0 c=1 d=0
+PASS: in=1 sel=11 | a=0 b=0 c=0 d=1
+diff_control Case
+PASS: in=0 sel=00 | a=0 b=0 c=0 d=0
+PASS: in=0 sel=01 | a=0 b=0 c=0 d=0
+PASS: in=0 sel=10 | a=0 b=0 c=0 d=0
+PASS: in=0 sel=11 | a=0 b=0 c=0 d=0
+diff_input Case
+PASS: in=0 sel=11 | a=0 b=0 c=0 d=0
+PASS: in=1 sel=11 | a=0 b=0 c=0 d=1
+diff_input Case
+PASS: in=0 sel=00 | a=0 b=0 c=0 d=0
+PASS: in=1 sel=00 | a=1 b=0 c=0 d=0
+Test summary:
+PASS:         22
+FAIL:          0

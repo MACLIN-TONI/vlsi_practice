@@ -1,0 +1,91 @@
+dut: mux_4to1_procedural
+tb: tb_mux_4to1_procedural
+input : 
+	1 bit: a, b, c, d
+	2 bit: sel
+output: 
+	1 bit: out
+
+function: truth table
+	sel|out
+	00|a
+	01|b
+	10|c
+	11|d
+
+Verification:
+1, normal case:
+	a=1,b=0,c=1,d=0, sel=10
+	exp_out= 1
+	wave_out=1
+PASS: a=1 b=0 c=1 d=0 sel=00 out=1
+PASS: a=1 b=0 c=1 d=0 sel=01 out=0
+PASS: a=1 b=0 c=1 d=0 sel=10 out=1
+PASS: a=1 b=0 c=1 d=0 sel=11 out=0
+	 
+2,cornor case:
+	i, boundary case:
+		a=b=c=d= 0
+		exp_out=0
+		wave_out=0
+	   corner case
+PASS: a=0 b=0 c=0 d=0 sel=00 out=0
+PASS: a=0 b=0 c=0 d=0 sel=01 out=0
+PASS: a=0 b=0 c=0 d=0 sel=10 out=0
+PASS: a=0 b=0 c=0 d=0 sel=11 out=0
+corner case
+PASS: a=1 b=1 c=1 d=1 sel=00 out=1
+PASS: a=1 b=1 c=1 d=1 sel=01 out=1
+PASS: a=1 b=1 c=1 d=1 sel=10 out=1
+PASS: a=1 b=1 c=1 d=1 sel=11 out=1
+
+	ii, control case:
+		 satisfied with normal case test.
+		 PASS: a=1 b=0 c=1 d=0 sel=00 out=1
+PASS: a=1 b=0 c=1 d=0 sel=01 out=0
+PASS: a=1 b=0 c=1 d=0 sel=10 out=1
+PASS: a=1 b=0 c=1 d=0 sel=11 out=0
+
+	iii, path leakage
+	corner case
+PASS: a=1 b=0 c=0 d=0 sel=00 out=1
+PASS: a=1 b=0 c=0 d=0 sel=01 out=0
+PASS: a=1 b=0 c=0 d=0 sel=10 out=0
+PASS: a=1 b=0 c=0 d=0 sel=11 out=0
+corner case
+PASS: a=0 b=1 c=0 d=0 sel=00 out=0
+PASS: a=0 b=1 c=0 d=0 sel=01 out=1
+PASS: a=0 b=1 c=0 d=0 sel=10 out=0
+PASS: a=0 b=1 c=0 d=0 sel=11 out=0
+corner case
+PASS: a=0 b=0 c=1 d=0 sel=00 out=0
+PASS: a=0 b=0 c=1 d=0 sel=01 out=0
+PASS: a=0 b=0 c=1 d=0 sel=10 out=1
+PASS: a=0 b=0 c=1 d=0 sel=11 out=0
+corner case
+PASS: a=0 b=0 c=0 d=1 sel=00 out=0
+PASS: a=0 b=0 c=0 d=1 sel=01 out=0
+PASS: a=0 b=0 c=0 d=1 sel=10 out=0
+PASS: a=0 b=0 c=0 d=1 sel=11 out=1
+
+
+learning from wave:
+when c:1, a=b=d=0
+the output-> 1 only during the time period sel->10
+
+1. FORMULA
+   RTL: case(sel): 2'b10 → out = c
+
+2. SUBSTITUTE
+   c=1, sel=2'b10
+   out = c = _1
+   
+   c=1, sel=2'b00
+   out = a = __0
+   
+   c=1, sel=2'b01
+   out = b = _0_
+   
+   c=1, sel=2'b11
+   out = d = __0
+
