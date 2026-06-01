@@ -1,0 +1,48 @@
+DUT: encoder_4to2
+INPUT: 4 bits-> [3:0] d_in 
+OUTPUT: 2 bit-> [1:0] d_out.
+FUNTION:
+i3|i2|i1|i0 | o1|o0
+0 0 0 1 | 0 0
+0 0 1 0 | 0 1
+0 1 0 0 | 1 0
+1 0 0 0 | 1 1
+
+d_out[1] = d_in[2] + d+in[3]
+d_out[0] = d_in[1] + d_in[3]
+
+
+case verification:
+1, Normal case:
+	d_in: 0100
+	formula: 4'b0100: d_out=10, valid input =1.
+	waveform: at 40 ns verified.
+
+2, Boundary case:
+	d_in = 0000: valid->0
+	dout= 00
+	waveform: 10ns verified.
+	d_in=1111: valid->0
+	d_out=00
+	waveform: 150 ns verified
+
+3, Same input: 
+	d_in = 0000: valid->0
+	dout= 00
+	waveform: 10ns verified.
+	d_in=1111: valid->0
+	d_out=00
+	waveform: 150 ns verified
+
+4, input validity check:
+	din=1000: valid-> 1
+	dout=11
+	waveform: 80 ns
+	din = 1010: valid -> 0
+	dout=00
+	waveform: 100ns
+5, Signal transition:
+	d_in= 0111 -> 1000
+	at(79999 ps to 80ns) : din=0111: dout= 00
+	at(80ns to 80001ps)
+	din=1000: dout=11
