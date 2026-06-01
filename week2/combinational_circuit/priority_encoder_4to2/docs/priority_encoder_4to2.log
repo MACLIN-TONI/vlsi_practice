@@ -1,0 +1,21 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS: d_in=0000 d_out=00 valid=0
+PASS: d_in=0001 d_out=00 valid=1
+PASS: d_in=0010 d_out=01 valid=1
+PASS: d_in=0011 d_out=01 valid=1
+PASS: d_in=0100 d_out=10 valid=1
+PASS: d_in=0101 d_out=10 valid=1
+PASS: d_in=0110 d_out=10 valid=1
+PASS: d_in=0111 d_out=10 valid=1
+PASS: d_in=1000 d_out=11 valid=1
+PASS: d_in=1001 d_out=11 valid=1
+PASS: d_in=1010 d_out=11 valid=1
+PASS: d_in=1011 d_out=11 valid=1
+PASS: d_in=1100 d_out=11 valid=1
+PASS: d_in=1101 d_out=11 valid=1
+PASS: d_in=1110 d_out=11 valid=1
+PASS: d_in=1111 d_out=11 valid=1
+Test Summary:
+PASS:          16
+FAIL:           0
+tb/tb_priority_encoder_4to2.v:69: $finish called at 160000 (1ps)

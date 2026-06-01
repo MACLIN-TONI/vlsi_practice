@@ -1,0 +1,7 @@
+
+1, use casez for priority encoder, case using dontcare.
+   if needed exact match use-> case. 
+   dont use casex for rtl: if bug make the input x, it matches the case.
+
+2, use "if else" for priority logic..
+    highest to lowest.
