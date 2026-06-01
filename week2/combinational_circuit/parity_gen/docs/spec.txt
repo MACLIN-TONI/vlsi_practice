@@ -1,0 +1,23 @@
+MODULE      : parity_gen
+INPUTS      : [7:0] data   — 8-bit input word
+OUTPUTS     : even_parity  — 1-bit even parity
+              odd_parity   — 1-bit odd parity
+FUNCTION    :
+  even_parity = XOR of all bits
+                makes total 1s count even
+  odd_parity  = ~even_parity
+                makes total 1s count odd
+RELATIONSHIP: odd_parity = ~even_parity always
+
+CORNER CASES:
+  1. BOUNDARY  : data=0x00 → zero 1s → even_parity=0, odd=1
+                 data=0xFF → eight 1s → even_parity=0, odd=1
+  2. CONTROL   : single bit set → odd number of 1s
+                 data=0x01,0x02,0x04... → even_parity=1
+  3. EQUAL     : data=0x00 → all same (all zero)
+  4. ISOLATION : one bit active at a time
+                 data=8'b00000001 → even_parity=1
+                 data=8'b00000010 → even_parity=1
+  5. TRANSITION: data changes from even to odd count
+                 data=0x03(two 1s)→0x07(three 1s)
+                 even_parity: 0→1

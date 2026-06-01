@@ -1,0 +1,114 @@
+$date
+	Mon Jun  1 18:38:51 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_parity_gen $end
+$var wire 1 ! odd_parity $end
+$var wire 1 " even_parity $end
+$var reg 8 # data [7:0] $end
+$var integer 32 $ fail [31:0] $end
+$var integer 32 % pass [31:0] $end
+$scope module dut $end
+$var wire 8 & data [7:0] $end
+$var reg 1 " even_parity $end
+$var reg 1 ! odd_parity $end
+$upscope $end
+$scope task check $end
+$var reg 64 ' case_type [63:0] $end
+$var reg 1 ( exp_even_parity $end
+$var reg 1 ) exp_odd_parity $end
+$var reg 8 * t_data [7:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 *
+1)
+0(
+b100001001101111011101010110111001100100011000010111001001111001 '
+b0 &
+b0 %
+b0 $
+b0 #
+0"
+1!
+$end
+#10000
+b11111111 #
+b11111111 &
+b11111111 *
+b1 %
+#20000
+0!
+1"
+0)
+1(
+b100000 #
+b100000 &
+b100000 *
+b1000011011011110110111001110100011100100110111101101100 '
+b10 %
+#30000
+b100 #
+b100 &
+b100 *
+b11 %
+#40000
+1!
+0"
+1)
+0(
+b10100 #
+b10100 &
+b10100 *
+b100 %
+#50000
+b101 #
+b101 &
+b101 *
+b101 %
+#60000
+0!
+1"
+0)
+1(
+b1 #
+b1 &
+b1 *
+b111001101101111011011000110000101110100011010010110111101101110 '
+b110 %
+#70000
+b10000000 #
+b10000000 &
+b10000000 *
+b111 %
+#80000
+1!
+0"
+1)
+0(
+b11 #
+b11 &
+b11 *
+b110000101101110011100110110100101110100011010010110111101101110 '
+b1000 %
+#90000
+0!
+1"
+0)
+1(
+b1 #
+b1 &
+b1 *
+b1001 %
+#100000
+b1010 %
