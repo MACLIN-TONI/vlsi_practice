@@ -1,0 +1,35 @@
+DUT: comparator_4bit
+INPUT: 
+    wire [3:0] a, b
+OUTPUT:
+    reg eq, lt, gt (1-bit each)
+
+FUNCTION: 
+    (a == b) -> eq =1
+    (a > b) -> gt=1
+    (a < b) -> lt=1 
+
+GUARANTEE: exactly one of the 3 output should be 1, others 0.
+
+CORNER CASES:
+  1. BOUNDARY    : a=0,b=0 → eq=1 (verified)
+                   a=15,b=15 → eq=1 (verified)
+                   a=15,b=0  → gt=1 (verified)
+                   a=0,b=15  → lt=1 (verified)
+
+  2. CONTROL     : a=b at every value → eq always 1
+        a=b= 10 (verified)
+        a=b= 0 (verified)
+        a=b= 15 (verified)
+  3. EQUAL       : a=b=0, a=b=8, a=b=15 (verified)
+
+  4. ISOLATION   : a=1,b=0 → gt (smallest possible gt) (verified)
+                   a=0,b=1 → lt (smallest possible lt) (verified)
+
+  5. TRANSITION  : a fixed, b sweeps 0→15
+        a=10 
+        (0 ns - 100 ns) -> gt=1 
+        (100ns - 110ns) -> eq=1
+        (110ns- 160ns) -> lt=1
+
+        

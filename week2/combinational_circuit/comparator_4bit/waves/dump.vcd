@@ -1,0 +1,273 @@
+$date
+	Mon Jun  1 11:04:51 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_comparator_4bit $end
+$var wire 1 ! lt $end
+$var wire 1 " gt $end
+$var wire 1 # eq $end
+$var reg 4 $ a [3:0] $end
+$var reg 4 % b [3:0] $end
+$var integer 32 & fail [31:0] $end
+$var integer 32 ' pass [31:0] $end
+$scope module dut $end
+$var wire 4 ( a [3:0] $end
+$var wire 4 ) b [3:0] $end
+$var reg 1 # eq $end
+$var reg 1 " gt $end
+$var reg 1 ! lt $end
+$upscope $end
+$scope task check $end
+$var reg 100 * case_type [99:0] $end
+$var reg 1 + exp_eq $end
+$var reg 1 , exp_gt $end
+$var reg 1 - exp_lt $end
+$var reg 4 . t_a [3:0] $end
+$var reg 4 / t_b [3:0] $end
+$upscope $end
+$scope task exhaustive_sweep $end
+$var reg 1 0 exp_eq $end
+$var reg 1 1 exp_gt $end
+$var reg 1 2 exp_lt $end
+$var reg 5 3 i [4:0] $end
+$var reg 4 4 t_a [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b1010 4
+b0 3
+02
+11
+00
+bx /
+bx .
+x-
+x,
+x+
+bx *
+b0 )
+b1010 (
+b0 '
+b0 &
+b0 %
+b1010 $
+0#
+1"
+0!
+$end
+#10000
+1"
+b1 %
+b1 )
+b1 3
+b1 '
+#20000
+1"
+b10 %
+b10 )
+b10 3
+b10 '
+#30000
+1"
+b11 %
+b11 )
+b11 3
+b11 '
+#40000
+1"
+b100 %
+b100 )
+b100 3
+b100 '
+#50000
+1"
+b101 %
+b101 )
+b101 3
+b101 '
+#60000
+1"
+b110 %
+b110 )
+b110 3
+b110 '
+#70000
+1"
+b111 %
+b111 )
+b111 3
+b111 '
+#80000
+1"
+b1000 %
+b1000 )
+b1000 3
+b1000 '
+#90000
+1"
+b1001 %
+b1001 )
+b1001 3
+b1001 '
+#100000
+1#
+0"
+01
+10
+b1010 %
+b1010 )
+b1010 3
+b1010 '
+#110000
+1!
+0#
+12
+00
+b1011 %
+b1011 )
+b1011 3
+b1011 '
+#120000
+1!
+b1100 %
+b1100 )
+b1100 3
+b1100 '
+#130000
+1!
+b1101 %
+b1101 )
+b1101 3
+b1101 '
+#140000
+1!
+b1110 %
+b1110 )
+b1110 3
+b1110 '
+#150000
+1!
+b1111 %
+b1111 )
+b1111 3
+b1111 '
+#160000
+1#
+0!
+0,
+0-
+1+
+b0 %
+b0 )
+b0 $
+b0 (
+b0 /
+b0 .
+b100001001101111011101010110111001100100011000010111001001111001 *
+b10000 3
+b10000 '
+#170000
+1#
+b1111 %
+b1111 )
+b1111 $
+b1111 (
+b1111 /
+b1111 .
+b10001 '
+#180000
+1!
+0#
+1-
+0+
+b0 $
+b0 (
+b0 .
+b10010 '
+#190000
+1"
+0!
+1,
+0-
+b0 %
+b0 )
+b1111 $
+b1111 (
+b0 /
+b1111 .
+b10011 '
+#200000
+1!
+0"
+0,
+1-
+b101 %
+b101 )
+b100 $
+b100 (
+b101 /
+b100 .
+b10100110111100101101101011011010110010101110100011100100110100101100011 *
+b10100 '
+#210000
+1"
+0!
+1,
+0-
+b100 %
+b100 )
+b101 $
+b101 (
+b100 /
+b101 .
+b10101 '
+#220000
+1#
+0"
+0,
+1+
+b1000 %
+b1000 )
+b1000 $
+b1000 (
+b1000 /
+b1000 .
+b100010101110001011101010110000101101100 *
+b10110 '
+#230000
+1!
+0#
+1-
+0+
+b1 %
+b1 )
+b0 $
+b0 (
+b1 /
+b0 .
+b10010010111001101101111011011000110000101110100011010010110111101101110 *
+b10111 '
+#240000
+1"
+0!
+1,
+0-
+b0 %
+b0 )
+b1 $
+b1 (
+b0 /
+b1 .
+b11000 '
+#250000
+b11001 '

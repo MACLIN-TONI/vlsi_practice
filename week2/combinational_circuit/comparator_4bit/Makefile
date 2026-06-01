@@ -1,4 +1,4 @@
-DUT ?= priority_encoder_4to2
+DUT ?= comparator_4bit
 RTL = rtl/$(DUT).v
 TB = tb/tb_$(DUT).v
 TOP = tb_$(DUT)
@@ -6,14 +6,11 @@ SIM = sim/sim.out
 WAVE = waves/dump.vcd
 LOG = docs/$(DUT).log
 
-compile: 
-	iverilog -g2012 -o  $(SIM) $(RTL) $(TB)
+compile:
+	iverilog -g2012 -o $(SIM) $(RTL) $(TB)
 
-run: compile
+run: compile 
 	vvp $(SIM) | tee $(LOG)
-
-wave: run
-	gtkwave $(WAVE) &
 
 check: run
 	@echo "---FAILURES---"
@@ -21,7 +18,11 @@ check: run
 	@echo "---SUMMARY---"
 	@grep "summary\|PASS\|FAIL" $(LOG) | tail -2
 
+wave: run
+	gtkwave $(WAVE) &
+
 clean:
 	rm -f $(SIM) $(WAVE) $(LOG)
 
-.PHONY: compile run wave clean
+.PHONY: compile run check wave clean
+
