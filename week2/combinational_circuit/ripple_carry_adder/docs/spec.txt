@@ -1,0 +1,22 @@
+MODULE      : rca_4bit
+INPUTS      : [3:0] a, b — two 4-bit unsigned numbers
+              cin        — carry input (usually 0)
+OUTPUTS     : [3:0] sum  — 4-bit result
+              cout       — final carry out (overflow indicator)
+FUNCTION    : {cout, sum} = a + b + cin
+MAX VALUE   : 15 + 15 + 1 = 31 = 5'b11111
+
+CORNER CASES:
+  1. BOUNDARY  : a=0,  b=0,  cin=0 → sum=0,    cout=0
+
+                 a=15, b=15, cin=1 → sum=15,   cout=1
+                 a=15, b=0,  cin=0 → sum=15,   cout=0
+  2. CONTROL   : cin=0 vs cin=1 with same a,b
+                 a=15, b=15, cin=0 → sum=14, cout=1
+                 a=15, b=15, cin=1 → sum=15, cout=1
+  3. OVERFLOW  : result > 15 → cout=1
+                 a=8, b=8, cin=0 → sum=0, cout=1
+  4. ISOLATION : a=1,b=0,cin=0 → sum=1, cout=0
+                 a=0,b=1,cin=0 → sum=1, cout=0
+  5. TRANSITION: a fixed, b sweeps 0→15
+                 watch cout go high when sum overflows

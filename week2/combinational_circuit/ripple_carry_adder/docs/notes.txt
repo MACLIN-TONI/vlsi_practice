@@ -1,0 +1,24 @@
+1, generate block is used to dynammically generate repeated blocks/chosing block.
+   -> this is based on parameter.
+   -> this can help to design both 4 bit module and 8 bit module.
+    
+
+2, wire [N:0] carry;
+    assign carry[0] = cin;
+    assign carry_out = carry[N];
+
+    generate block contains:
+         generate
+        for (i=0;i<N;i=i+1) begin : fa_stage
+            full_adder dut (
+                .a(a[i]),
+                .b(b[i]),
+                .cin(carry[i]),
+                .sum(sum[i]),
+                .carry_out(carry[i+1])
+            );
+        end
+    endgenerate
+
+    so to map the carrys, all the carry are stored in a [N:0] carry wire.
+    
