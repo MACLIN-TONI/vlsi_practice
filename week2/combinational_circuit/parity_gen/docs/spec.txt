@@ -11,13 +11,37 @@ RELATIONSHIP: odd_parity = ~even_parity always
 
 CORNER CASES:
   1. BOUNDARY  : data=0x00 → zero 1s → even_parity=0, odd=1
+              formula: ^(0 0 0 0 0 0 0 0)
+                         0 0 0 0 0 0 0  ans->0(no 1 needed to make even)
                  data=0xFF → eight 1s → even_parity=0, odd=1
+              formula: ^(1 1 1 1 1 1 1 1)
+                           0 1 0 1 0 1 0  ans->0(no 1 needed to make even)
+                          verified
   2. CONTROL   : single bit set → odd number of 1s
                  data=0x01,0x02,0x04... → even_parity=1
+                 ex: ^(0 0 0 1 0 0 0 0)
+                         0 0 1 1 1 1 1  ans-> 1(1 needed to make even)
+                         verified
   3. EQUAL     : data=0x00 → all same (all zero)
+               formula: ^(0 0 0 0 0 0 0 0)
+                         0 0 0 0 0 0 0  ans->0(no 1 needed to make even)
+                 data=0xFF → eight 1s → even_parity=0, odd=1
+                 verified
+
   4. ISOLATION : one bit active at a time
                  data=8'b00000001 → even_parity=1
+                formula=^(0 0 0 0 0 0 0 1)
+                            0 0 0 0 0 0 1 ans -> 1 
                  data=8'b00000010 → even_parity=1
+                 formula= ^( 0 0 0 0 0 0 1 0)
+                               0 0 0 0 0 1 1 ans->1 
+                  verified
+
   5. TRANSITION: data changes from even to odd count
-                 data=0x03(two 1s)→0x07(three 1s)
-                 even_parity: 0→1
+                 data=0x80(one 1)→0x03(two 1s)
+                 even_parity: 1->0
+                 at(79999 ps to 80 ns)
+                 even_parity=1, odd_parity=0
+                 at(80 ns to 80001 ps)
+                 even_parity=0, odd_parity=1
+              no delay (verified)
