@@ -1,8 +1,8 @@
 module ripple_carry_adder #(parameter N=4) (
     input [N-1:0] a, b,
     input cin,
-    output reg [N-1:0] sum,
-    output reg carry_out
+    output [N-1:0] sum,
+    output carry_out
 ); 
 
     wire [N:0] carry;
