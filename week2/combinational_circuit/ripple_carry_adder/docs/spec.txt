@@ -8,15 +8,77 @@ MAX VALUE   : 15 + 15 + 1 = 31 = 5'b11111
 
 CORNER CASES:
   1. BOUNDARY  : a=0,  b=0,  cin=0 → sum=0,    cout=0
-
+          formula:   a- 0 0 0 0
+                     b- 0 0 0 0
+                  cin-        0
+                  sum-  0 0 0 0
+                c_out-0
+                verified.
+                
                  a=15, b=15, cin=1 → sum=15,   cout=1
+          formula: c    1 1 1
+                     a- 1 1 1 1
+                     b- 1 1 1 1
+                  cin-        1
+                  sum-   1 1 1 1 
+              c_out-   1
+                verified.
                  a=15, b=0,  cin=0 → sum=15,   cout=0
+
+          formula: c    
+                     a- 1 1 1 1
+                     b- 0 0 0 0
+                  cin-        0
+                  sum-  1 1 1 1  
+              c_out-   0
+                verified.
   2. CONTROL   : cin=0 vs cin=1 with same a,b
                  a=15, b=15, cin=0 → sum=14, cout=1
+
+            formula: c  1 1 1
+                     a- 1 1 1 1
+                     b- 1 1 1 1
+                  cin-        0
+                  sum-  1 1 1 0
+              c_out-  1
+                verified.
+
                  a=15, b=15, cin=1 → sum=15, cout=1
+            formula: c  1 1 1
+                     a- 1 1 1 1
+                     b- 1 1 1 1
+                  cin-        1
+                  sum-  1 1 1 1
+              c_out- 1
+                verified.
   3. OVERFLOW  : result > 15 → cout=1
                  a=8, b=8, cin=0 → sum=0, cout=1
+            formula: c  
+                     a- 1 0 0 0
+                     b- 1 0 0 0
+                  cin-        0
+                  sum-  0 0 0 0
+              c_out-  1
+                verified.
   4. ISOLATION : a=1,b=0,cin=0 → sum=1, cout=0
+
+            formula: c  
+                     a- 0 0 0 1
+                     b- 0 0 0 0
+                  cin-        0
+                  sum-  0 0 0 1 
+              c_out-  0
+                verified.
                  a=0,b=1,cin=0 → sum=1, cout=0
+            formula: c  
+                     a- 0 0 0 0
+                     b- 0 0 0 1
+                  cin-        0
+                  sum-  0 0 0 1
+              c_out- 0
+                verified.
   5. TRANSITION: a fixed, b sweeps 0→15
+                 a=8
+                 at(2560 ns to 2700ns): a=8 b=0->7(cin=0):carry_out=0
+                 at(2710 ns to 2880ns): a=8 b=7->F(cin=1):carry_out=1
                  watch cout go high when sum overflows
