@@ -1,0 +1,6 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+d=0 | q=0 | qb=1
+d=1 | q=1 | qb=0
+d=0 | q=0 | qb=1
+d=1 | q=1 | qb=0
+tb/tb_D_latch.v:41: $finish called at 48 (1s)

@@ -1,0 +1,125 @@
+$date
+	Fri Sep 11 12:50:41 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_SR_latch_NAND $end
+$var wire 1 ! qb $end
+$var wire 1 " q $end
+$var reg 1 # clk $end
+$var reg 1 $ r $end
+$var reg 1 % s $end
+$scope module dut $end
+$var wire 1 # clk $end
+$var wire 1 " q $end
+$var wire 1 ! qb $end
+$var wire 1 $ r $end
+$var wire 1 % s $end
+$var wire 1 & w1 $end
+$var wire 1 ' w2 $end
+$upscope $end
+$scope task check $end
+$var reg 3 ( i [2:0] $end
+$var reg 3 ) j [2:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 )
+b0 (
+1'
+1&
+0%
+0$
+0#
+x"
+x!
+$end
+#5000
+1#
+#10000
+0#
+1$
+b1 )
+#15000
+0"
+1!
+0'
+1#
+#20000
+1'
+0#
+0$
+1%
+b1 (
+b0 )
+#25000
+0!
+1"
+0&
+1#
+#30000
+1&
+0#
+1$
+b1 )
+#35000
+1!
+0&
+0'
+1#
+#40000
+0"
+1'
+1&
+0#
+0$
+0%
+b0 (
+b0 )
+#45000
+1#
+#50000
+0#
+1$
+b1 )
+#55000
+0'
+1#
+#60000
+1'
+0#
+0$
+1%
+b1 (
+b0 )
+#65000
+0!
+1"
+0&
+1#
+#70000
+1&
+0#
+1$
+b1 )
+#75000
+1!
+0&
+0'
+1#
+#80000
+0!
+1&
+1'
+0#
+b10 (
+b10 )

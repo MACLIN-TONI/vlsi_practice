@@ -1,0 +1,104 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2009.vpi";
+S_0x55c81193cde0 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x55c81193cf70 .scope module, "tb_D_latch" "tb_D_latch" 3 1;
+ .timescale 0 0;
+v0x55c811954b40_0 .var "clk", 0 0;
+v0x55c811954c30_0 .var "d", 0 0;
+v0x55c811954d40_0 .net "q", 0 0, L_0x55c811955000;  1 drivers
+v0x55c811954e30_0 .net "qb", 0 0, L_0x55c811955070;  1 drivers
+S_0x55c81193ee30 .scope task, "check" "check" 3 25, 3 25 0, S_0x55c81193cf70;
+ .timescale 0 0;
+v0x55c81193f010_0 .var "i", 2 0;
+TD_tb_D_latch.check ;
+    %pushi/vec4 0, 0, 3;
+    %store/vec4 v0x55c81193f010_0, 0, 3;
+T_0.0 ;
+    %load/vec4 v0x55c81193f010_0;
+    %pad/u 32;
+    %cmpi/u 2, 0, 32;
+    %jmp/0xz T_0.1, 5;
+    %load/vec4 v0x55c81193f010_0;
+    %pad/u 1;
+    %store/vec4 v0x55c811954c30_0, 0, 1;
+    %delay 12, 0;
+    %vpi_call/w 3 31 "$display", "d=%b | q=%b | qb=%b", v0x55c811954c30_0, v0x55c811954d40_0, v0x55c811954e30_0 {0 0 0};
+    %load/vec4 v0x55c81193f010_0;
+    %addi 1, 0, 3;
+    %store/vec4 v0x55c81193f010_0, 0, 3;
+    %jmp T_0.0;
+T_0.1 ;
+    %end;
+S_0x55c811953cd0 .scope module, "dut" "D_latch" 3 8, 4 1 0, S_0x55c81193cf70;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "d";
+    .port_info 2 /OUTPUT 1 "q";
+    .port_info 3 /OUTPUT 1 "qb";
+L_0x55c8119551a0 .functor NOT 1, v0x55c811954c30_0, C4<0>, C4<0>, C4<0>;
+v0x55c8119547b0_0 .net "clk", 0 0, v0x55c811954b40_0;  1 drivers
+v0x55c811954870_0 .net "d", 0 0, v0x55c811954c30_0;  1 drivers
+v0x55c811954940_0 .net "q", 0 0, L_0x55c811955000;  alias, 1 drivers
+v0x55c811954a40_0 .net "qb", 0 0, L_0x55c811955070;  alias, 1 drivers
+S_0x55c811953f40 .scope module, "SR" "SR_latch_NAND" 4 8, 5 1 0, S_0x55c811953cd0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 1 "s";
+    .port_info 2 /INPUT 1 "r";
+    .port_info 3 /OUTPUT 1 "q";
+    .port_info 4 /OUTPUT 1 "qb";
+L_0x55c811954f20 .functor NAND 1, v0x55c811954c30_0, v0x55c811954b40_0, C4<1>, C4<1>;
+L_0x55c811954f90 .functor NAND 1, L_0x55c8119551a0, v0x55c811954b40_0, C4<1>, C4<1>;
+L_0x55c811955000 .functor NAND 1, L_0x55c811954f20, L_0x55c811955070, C4<1>, C4<1>;
+L_0x55c811955070 .functor NAND 1, L_0x55c811954f90, L_0x55c811955000, C4<1>, C4<1>;
+v0x55c811954150_0 .net "clk", 0 0, v0x55c811954b40_0;  alias, 1 drivers
+v0x55c811954230_0 .net "q", 0 0, L_0x55c811955000;  alias, 1 drivers
+v0x55c8119542f0_0 .net "qb", 0 0, L_0x55c811955070;  alias, 1 drivers
+v0x55c8119543c0_0 .net "r", 0 0, L_0x55c8119551a0;  1 drivers
+v0x55c811954480_0 .net "s", 0 0, v0x55c811954c30_0;  alias, 1 drivers
+v0x55c811954590_0 .net "w1", 0 0, L_0x55c811954f20;  1 drivers
+v0x55c811954650_0 .net "w2", 0 0, L_0x55c811954f90;  1 drivers
+    .scope S_0x55c81193cf70;
+T_1 ;
+    %vpi_call/w 3 16 "$dumpfile", "waves/dump.vcd" {0 0 0};
+    %vpi_call/w 3 17 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x55c81193cf70 {0 0 0};
+    %end;
+    .thread T_1;
+    .scope S_0x55c81193cf70;
+T_2 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x55c811954b40_0, 0, 1;
+T_2.0 ;
+    %delay 5, 0;
+    %load/vec4 v0x55c811954b40_0;
+    %inv;
+    %store/vec4 v0x55c811954b40_0, 0, 1;
+    %jmp T_2.0;
+    %end;
+    .thread T_2;
+    .scope S_0x55c81193cf70;
+T_3 ;
+    %fork TD_tb_D_latch.check, S_0x55c81193ee30;
+    %join;
+    %fork TD_tb_D_latch.check, S_0x55c81193ee30;
+    %join;
+    %vpi_call/w 3 41 "$finish" {0 0 0};
+    %end;
+    .thread T_3;
+# The file index is used to find the file name in the following table.
+:file_names 6;
+    "N/A";
+    "<interactive>";
+    "-";
+    "tb/tb_D_latch.v";
+    "rtl/D_latch.v";
+    "rtl/SR_latch_NAND.v";

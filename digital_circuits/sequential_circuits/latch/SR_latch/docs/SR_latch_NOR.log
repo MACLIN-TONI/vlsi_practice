@@ -1,0 +1,10 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+s=0 | r=0 | q=x | qb=x
+s=0 | r=1 | q=0 | qb=1
+s=1 | r=0 | q=1 | qb=0
+s=1 | r=1 | q=0 | qb=0
+s=0 | r=0 | q=0 | qb=1
+s=0 | r=1 | q=0 | qb=1
+s=1 | r=0 | q=1 | qb=0
+s=1 | r=1 | q=0 | qb=0
+tb/tb_SR_latch_NOR.v:55: $finish called at 80000 (1ps)

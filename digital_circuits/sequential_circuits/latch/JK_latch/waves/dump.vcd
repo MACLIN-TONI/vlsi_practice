@@ -1,0 +1,139 @@
+$date
+	Fri Sep 11 12:44:57 2026
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_JK_latch $end
+$var wire 1 ! qb $end
+$var wire 1 " q $end
+$var reg 1 # clk $end
+$var reg 1 $ j $end
+$var reg 1 % k $end
+$scope module dut $end
+$var wire 1 # clk $end
+$var wire 1 $ j $end
+$var wire 1 % k $end
+$var wire 1 " q $end
+$var wire 1 ! qb $end
+$var wire 1 & w1 $end
+$var wire 1 ' w2 $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+1'
+1&
+x%
+x$
+0#
+x"
+x!
+$end
+#2000
+x&
+x'
+1#
+#4000
+1&
+1'
+0#
+#6000
+1#
+0%
+0$
+#8000
+0#
+#10000
+1#
+#12000
+0#
+1%
+#14000
+x'
+1#
+#16000
+1'
+0#
+#18000
+x&
+1#
+0%
+1$
+#20000
+1&
+0#
+#22000
+x&
+1#
+#24000
+1&
+0#
+1%
+#26000
+x&
+x'
+1#
+#28000
+1&
+1'
+0#
+#30000
+1#
+0%
+0$
+#32000
+0#
+#34000
+1#
+#36000
+0#
+1%
+#38000
+x'
+1#
+#40000
+1'
+0#
+#42000
+x&
+1#
+0%
+1$
+#44000
+1&
+0#
+#46000
+x&
+1#
+#48000
+1&
+0#
+1%
+#50000
+x&
+x'
+1#
+#52000
+1&
+1'
+0#
+#54000
+x&
+x'
+1#
+#56000
+1&
+1'
+0#
+#58000
+x&
+x'
+1#
