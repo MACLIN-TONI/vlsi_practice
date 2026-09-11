@@ -1,0 +1,13 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS: en=0 din=00 out=0000
+PASS: en=0 din=01 out=0000
+PASS: en=0 din=10 out=0000
+PASS: en=0 din=11 out=0000
+PASS: en=1 din=00 out=0001
+PASS: en=1 din=01 out=0010
+PASS: en=1 din=10 out=0100
+PASS: en=1 din=11 out=1000
+TEST SUMMARY:
+PASS:          8
+FAIL:          0
+tb/tb_decoder_2to4.v:48: $finish called at 80000 (1ps)

@@ -1,0 +1,53 @@
+DUT: priority_encoder_4to2
+INPUT: 
+	wire [3:0] d_in
+OUTPUT: 
+	reg[1:0] d_out
+	reg valid
+FUNCTION: 
+ d_in -> d_out
+ 0001 -> 00 (valid->1)
+ 001? -> 01 (valid->1)
+ 01?? -> 10 (valid->1)
+ 1??? -> 11 (valid->1)
+ 0000 ->00 (valid->0)
+
+
+Case verification:
+1, Normal case:
+	din: 0100, valid:1, dout=10
+	verified	
+	
+2, Boundary case:
+	din:0000, valid:0, dout:00
+	verified
+	din:1111, valid:1, dout:11
+	verified
+         
+3, Same Input:
+	din:0000, valid:0, dout:00
+	verified
+	din:1111, valid:1, dout:11
+	verified
+
+4, Validity check:
+	din:0000, valid:0, dout:00
+	verified
+	din:1111, valid:1, dout:11
+	verified
+	
+5, Priority check:
+	din:0100, valid:1, dout:10
+	verified
+	din:0101, valid:1, dout:10
+	verified
+
+6, Output transition: (40ns)
+	at(39990 ps to 40ns): 
+		din:0011, dout:01
+	at(40ns to 40010 ps):
+		din:0100, dout:10
+	verified: no delay in transistion
+
+
+

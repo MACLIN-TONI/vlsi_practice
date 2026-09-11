@@ -1,0 +1,17 @@
+1, unsigned: 0000 -> 1111 = 0 to 15(F)
+   signed : 0000 -> 1111 = 0000(0) -> 0111 (7) -> 1000(-8) -> 1111(-1)
+
+   negative flag is used in signed number formats.
+
+
+2, for unsigned numbers: right shift, should be 
+   arithmetic right shift - >>>
+   left shift: <<
+
+Signed ports vs signed arithmetic:
+  input signed [3:0] a  → Verilog treats a as signed in expressions
+  input [3:0] a         → plain bits, you control interpretation
+
+  Industry convention: plain ports, explicit sign handling
+  Your {1'b0,a} zero-extension approach is correct either way
+  Switch to unsigned ports in future modules

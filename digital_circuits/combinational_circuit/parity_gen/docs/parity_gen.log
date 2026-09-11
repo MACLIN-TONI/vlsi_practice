@@ -1,0 +1,24 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+Boundary case
+PASS: data=00000000 even_parity=0 odd_parity=1
+Boundary case
+PASS: data=11111111 even_parity=0 odd_parity=1
+ Control case
+PASS: data=00100000 even_parity=1 odd_parity=0
+ Control case
+PASS: data=00000100 even_parity=1 odd_parity=0
+ Control case
+PASS: data=00010100 even_parity=0 odd_parity=1
+ Control case
+PASS: data=00000101 even_parity=0 odd_parity=1
+solation case
+PASS: data=00000001 even_parity=1 odd_parity=0
+solation case
+PASS: data=10000000 even_parity=1 odd_parity=0
+ansition case
+PASS: data=00000011 even_parity=0 odd_parity=1
+ansition case
+PASS: data=00000001 even_parity=1 odd_parity=0
+Test summary:
+PASS:         10
+FAIL:          0

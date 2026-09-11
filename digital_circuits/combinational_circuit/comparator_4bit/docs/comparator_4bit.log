@@ -1,0 +1,40 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+Exhaustive Sweep Test
+PASS: a=1010 b=0000 | eq =0 lt=0 gt=1
+PASS: a=1010 b=0001 | eq =0 lt=0 gt=1
+PASS: a=1010 b=0010 | eq =0 lt=0 gt=1
+PASS: a=1010 b=0011 | eq =0 lt=0 gt=1
+PASS: a=1010 b=0100 | eq =0 lt=0 gt=1
+PASS: a=1010 b=0101 | eq =0 lt=0 gt=1
+PASS: a=1010 b=0110 | eq =0 lt=0 gt=1
+PASS: a=1010 b=0111 | eq =0 lt=0 gt=1
+PASS: a=1010 b=1000 | eq =0 lt=0 gt=1
+PASS: a=1010 b=1001 | eq =0 lt=0 gt=1
+PASS: a=1010 b=1010 | eq =1 lt=0 gt=0
+PASS: a=1010 b=1011 | eq =0 lt=1 gt=0
+PASS: a=1010 b=1100 | eq =0 lt=1 gt=0
+PASS: a=1010 b=1101 | eq =0 lt=1 gt=0
+PASS: a=1010 b=1110 | eq =0 lt=1 gt=0
+PASS: a=1010 b=1111 | eq =0 lt=1 gt=0
+     Boundary test
+PASS: a=0000 b=0000 | eq =1 lt=0 gt=0
+     Boundary test
+PASS: a=1111 b=1111 | eq =1 lt=0 gt=0
+     Boundary test
+PASS: a=0000 b=1111 | eq =0 lt=1 gt=0
+     Boundary test
+PASS: a=1111 b=0000 | eq =0 lt=0 gt=1
+    Symmetric test
+PASS: a=0100 b=0101 | eq =0 lt=1 gt=0
+    Symmetric test
+PASS: a=0101 b=0100 | eq =0 lt=0 gt=1
+        Equal test
+PASS: a=1000 b=1000 | eq =1 lt=0 gt=0
+    Isolation test
+PASS: a=0000 b=0001 | eq =0 lt=1 gt=0
+    Isolation test
+PASS: a=0001 b=0000 | eq =0 lt=0 gt=1
+Test summary
+Pass:         25
+FAIL:          0
+tb/tb_comparator_4bit.v:104: $finish called at 250000 (1ps)

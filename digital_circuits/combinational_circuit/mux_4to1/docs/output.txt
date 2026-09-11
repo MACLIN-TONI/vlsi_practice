@@ -1,0 +1,41 @@
+iverilog -g2012 -o sim/sim.out rtl/mux_4to1_procedural.v tb/tb_mux_4to1_procedural.v
+vvp sim/sim.out
+VCD info: dumpfile waves/dump.vcd opened for output.
+normal case
+PASS: a=1 b=0 c=1 d=0 sel=00 out=1
+PASS: a=1 b=0 c=1 d=0 sel=01 out=0
+PASS: a=1 b=0 c=1 d=0 sel=10 out=1
+PASS: a=1 b=0 c=1 d=0 sel=11 out=0
+corner case
+PASS: a=0 b=0 c=0 d=0 sel=00 out=0
+PASS: a=0 b=0 c=0 d=0 sel=01 out=0
+PASS: a=0 b=0 c=0 d=0 sel=10 out=0
+PASS: a=0 b=0 c=0 d=0 sel=11 out=0
+corner case
+PASS: a=1 b=1 c=1 d=1 sel=00 out=1
+PASS: a=1 b=1 c=1 d=1 sel=01 out=1
+PASS: a=1 b=1 c=1 d=1 sel=10 out=1
+PASS: a=1 b=1 c=1 d=1 sel=11 out=1
+corner case
+PASS: a=1 b=0 c=0 d=0 sel=00 out=1
+PASS: a=1 b=0 c=0 d=0 sel=01 out=0
+PASS: a=1 b=0 c=0 d=0 sel=10 out=0
+PASS: a=1 b=0 c=0 d=0 sel=11 out=0
+corner case
+PASS: a=0 b=1 c=0 d=0 sel=00 out=0
+PASS: a=0 b=1 c=0 d=0 sel=01 out=1
+PASS: a=0 b=1 c=0 d=0 sel=10 out=0
+PASS: a=0 b=1 c=0 d=0 sel=11 out=0
+corner case
+PASS: a=0 b=0 c=1 d=0 sel=00 out=0
+PASS: a=0 b=0 c=1 d=0 sel=01 out=0
+PASS: a=0 b=0 c=1 d=0 sel=10 out=1
+PASS: a=0 b=0 c=1 d=0 sel=11 out=0
+corner case
+PASS: a=0 b=0 c=0 d=1 sel=00 out=0
+PASS: a=0 b=0 c=0 d=1 sel=01 out=0
+PASS: a=0 b=0 c=0 d=1 sel=10 out=0
+PASS: a=0 b=0 c=0 d=1 sel=11 out=1
+Test summary:          28 passed,           0 failed
+tb/tb_mux_4to1_procedural.v:102: $finish called at 280000 (1ps)
+gtkwave waves/dump.vcd &

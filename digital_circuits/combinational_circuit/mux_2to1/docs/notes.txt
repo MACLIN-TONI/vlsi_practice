@@ -1,0 +1,14 @@
+Dataflow style:
+  assign out = sel ? b : a;
+  → single line, purely combinational
+  → preferred for simple MUX, arithmetic, logic
+  → output must be wire
+
+Procedural style:
+  always @(*) begin
+      out = sel ? b : a;
+  end
+  → needed when logic is complex (case, if-else chains)
+  → output must be reg
+  → use always_comb in SystemVerilog
+  → same hardware result for combinational logic

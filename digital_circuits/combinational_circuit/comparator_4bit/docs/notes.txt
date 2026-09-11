@@ -1,0 +1,6 @@
+1, among eq, lt, gt-> only 1 should be '1' (one -hot style)
+
+2, while checking: if logic is dereived for 2 output,
+    3rd value(eg: gt) = ~eq & ~ lt.
+    reduces the number of operational blocks. 
+

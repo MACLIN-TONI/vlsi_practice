@@ -1,0 +1,296 @@
+#! /usr/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 12;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2009.vpi";
+S_0x5623d53c5ea0 .scope package, "$unit" "$unit" 2 1;
+ .timescale 0 0;
+S_0x5623d53c6030 .scope module, "tb_mux_4to1_procedural" "tb_mux_4to1_procedural" 3 2;
+ .timescale -9 -12;
+v0x5623d53e71c0_0 .var "a", 0 0;
+v0x5623d53e7280_0 .var "b", 0 0;
+v0x5623d53e7350_0 .var "c", 0 0;
+v0x5623d53e7450_0 .var "d", 0 0;
+v0x5623d53e7520_0 .var "exp_out", 0 0;
+v0x5623d53e7610_0 .var/i "fail", 31 0;
+v0x5623d53e76b0_0 .var/i "i", 31 0;
+v0x5623d53e7750_0 .net "out", 0 0, v0x5623d53e6f10_0;  1 drivers
+v0x5623d53e77f0_0 .var/i "pass", 31 0;
+v0x5623d53e78b0_0 .var "sel", 1 0;
+v0x5623d53e79a0_0 .var "t_sel", 1 0;
+S_0x5623d538b490 .scope task, "check" "check" 3 26, 3 26 0, S_0x5623d53c6030;
+ .timescale -9 -12;
+v0x5623d538b670_0 .var "case_type", 47 0;
+v0x5623d53e6610_0 .var "t_a", 0 0;
+v0x5623d53e66d0_0 .var "t_b", 0 0;
+v0x5623d53e6770_0 .var "t_c", 0 0;
+v0x5623d53e6830_0 .var "t_d", 0 0;
+TD_tb_mux_4to1_procedural.check ;
+    %load/vec4 v0x5623d53e6610_0;
+    %store/vec4 v0x5623d53e71c0_0, 0, 1;
+    %load/vec4 v0x5623d53e66d0_0;
+    %store/vec4 v0x5623d53e7280_0, 0, 1;
+    %load/vec4 v0x5623d53e6770_0;
+    %store/vec4 v0x5623d53e7350_0, 0, 1;
+    %load/vec4 v0x5623d53e6830_0;
+    %store/vec4 v0x5623d53e7450_0, 0, 1;
+    %vpi_call/w 3 34 "$display", "%s case", v0x5623d538b670_0 {0 0 0};
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x5623d53e76b0_0, 0, 32;
+T_0.0 ;
+    %load/vec4 v0x5623d53e76b0_0;
+    %cmpi/s 4, 0, 32;
+    %jmp/0xz T_0.1, 5;
+    %load/vec4 v0x5623d53e76b0_0;
+    %pad/s 2;
+    %store/vec4 v0x5623d53e79a0_0, 0, 2;
+    %load/vec4 v0x5623d53e79a0_0;
+    %store/vec4 v0x5623d53e78b0_0, 0, 2;
+    %load/vec4 v0x5623d53e79a0_0;
+    %dup/vec4;
+    %pushi/vec4 0, 0, 2;
+    %cmp/u;
+    %jmp/1 T_0.2, 6;
+    %dup/vec4;
+    %pushi/vec4 1, 0, 2;
+    %cmp/u;
+    %jmp/1 T_0.3, 6;
+    %dup/vec4;
+    %pushi/vec4 2, 0, 2;
+    %cmp/u;
+    %jmp/1 T_0.4, 6;
+    %dup/vec4;
+    %pushi/vec4 3, 0, 2;
+    %cmp/u;
+    %jmp/1 T_0.5, 6;
+    %jmp T_0.6;
+T_0.2 ;
+    %load/vec4 v0x5623d53e6610_0;
+    %store/vec4 v0x5623d53e7520_0, 0, 1;
+    %jmp T_0.6;
+T_0.3 ;
+    %load/vec4 v0x5623d53e66d0_0;
+    %store/vec4 v0x5623d53e7520_0, 0, 1;
+    %jmp T_0.6;
+T_0.4 ;
+    %load/vec4 v0x5623d53e6770_0;
+    %store/vec4 v0x5623d53e7520_0, 0, 1;
+    %jmp T_0.6;
+T_0.5 ;
+    %load/vec4 v0x5623d53e6830_0;
+    %store/vec4 v0x5623d53e7520_0, 0, 1;
+    %jmp T_0.6;
+T_0.6 ;
+    %pop/vec4 1;
+    %delay 10000, 0;
+    %load/vec4 v0x5623d53e7520_0;
+    %load/vec4 v0x5623d53e7750_0;
+    %cmp/e;
+    %jmp/0xz  T_0.7, 6;
+    %vpi_call/w 3 49 "$display", "PASS: a=%b b=%b c=%b d=%b sel=%b out=%b", v0x5623d53e71c0_0, v0x5623d53e7280_0, v0x5623d53e7350_0, v0x5623d53e7450_0, v0x5623d53e78b0_0, v0x5623d53e7750_0 {0 0 0};
+    %load/vec4 v0x5623d53e77f0_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0x5623d53e77f0_0, 0, 32;
+    %jmp T_0.8;
+T_0.7 ;
+    %vpi_call/w 3 54 "$display", "FAIL: a=%b b=%b c=%b d=%b sel=%b out=%b exp=%b", v0x5623d53e71c0_0, v0x5623d53e7280_0, v0x5623d53e7350_0, v0x5623d53e7450_0, v0x5623d53e78b0_0, v0x5623d53e7750_0, v0x5623d53e7520_0 {0 0 0};
+    %load/vec4 v0x5623d53e7610_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0x5623d53e7610_0, 0, 32;
+T_0.8 ;
+    %load/vec4 v0x5623d53e76b0_0;
+    %addi 1, 0, 32;
+    %store/vec4 v0x5623d53e76b0_0, 0, 32;
+    %jmp T_0.0;
+T_0.1 ;
+    %end;
+S_0x5623d53e6940 .scope module, "dut" "mux_4to1_procedural" 3 6, 4 1 0, S_0x5623d53c6030;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /INPUT 1 "d";
+    .port_info 4 /INPUT 2 "sel";
+    .port_info 5 /OUTPUT 1 "out";
+v0x5623d53e6c10_0 .net "a", 0 0, v0x5623d53e71c0_0;  1 drivers
+v0x5623d53e6cf0_0 .net "b", 0 0, v0x5623d53e7280_0;  1 drivers
+v0x5623d53e6db0_0 .net "c", 0 0, v0x5623d53e7350_0;  1 drivers
+v0x5623d53e6e50_0 .net "d", 0 0, v0x5623d53e7450_0;  1 drivers
+v0x5623d53e6f10_0 .var "out", 0 0;
+v0x5623d53e7020_0 .net "sel", 1 0, v0x5623d53e78b0_0;  1 drivers
+E_0x5623d53c4a50/0 .event anyedge, v0x5623d53e7020_0, v0x5623d53e6c10_0, v0x5623d53e6cf0_0, v0x5623d53e6db0_0;
+E_0x5623d53c4a50/1 .event anyedge, v0x5623d53e6e50_0;
+E_0x5623d53c4a50 .event/or E_0x5623d53c4a50/0, E_0x5623d53c4a50/1;
+    .scope S_0x5623d53e6940;
+T_1 ;
+    %wait E_0x5623d53c4a50;
+    %load/vec4 v0x5623d53e7020_0;
+    %dup/vec4;
+    %pushi/vec4 0, 0, 2;
+    %cmp/u;
+    %jmp/1 T_1.0, 6;
+    %dup/vec4;
+    %pushi/vec4 1, 0, 2;
+    %cmp/u;
+    %jmp/1 T_1.1, 6;
+    %dup/vec4;
+    %pushi/vec4 2, 0, 2;
+    %cmp/u;
+    %jmp/1 T_1.2, 6;
+    %dup/vec4;
+    %pushi/vec4 3, 0, 2;
+    %cmp/u;
+    %jmp/1 T_1.3, 6;
+    %pushi/vec4 1, 1, 1;
+    %store/vec4 v0x5623d53e6f10_0, 0, 1;
+    %jmp T_1.5;
+T_1.0 ;
+    %load/vec4 v0x5623d53e6c10_0;
+    %store/vec4 v0x5623d53e6f10_0, 0, 1;
+    %jmp T_1.5;
+T_1.1 ;
+    %load/vec4 v0x5623d53e6cf0_0;
+    %store/vec4 v0x5623d53e6f10_0, 0, 1;
+    %jmp T_1.5;
+T_1.2 ;
+    %load/vec4 v0x5623d53e6db0_0;
+    %store/vec4 v0x5623d53e6f10_0, 0, 1;
+    %jmp T_1.5;
+T_1.3 ;
+    %load/vec4 v0x5623d53e6e50_0;
+    %store/vec4 v0x5623d53e6f10_0, 0, 1;
+    %jmp T_1.5;
+T_1.5 ;
+    %pop/vec4 1;
+    %jmp T_1;
+    .thread T_1, $push;
+    .scope S_0x5623d53c6030;
+T_2 ;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x5623d53e77f0_0, 0, 32;
+    %pushi/vec4 0, 0, 32;
+    %store/vec4 v0x5623d53e7610_0, 0, 32;
+    %end;
+    .thread T_2, $init;
+    .scope S_0x5623d53c6030;
+T_3 ;
+    %vpi_call/w 3 16 "$dumpfile", "waves/dump.vcd" {0 0 0};
+    %vpi_call/w 3 17 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x5623d53c6030 {0 0 0};
+    %end;
+    .thread T_3;
+    .scope S_0x5623d53c6030;
+T_4 ;
+    %pushi/vec4 1852797549, 0, 32; draw_string_vec4
+    %pushi/vec4 24940, 0, 16; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x5623d538b670_0, 0, 48;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e6610_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e66d0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e6770_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6830_0, 0, 1;
+    %fork TD_tb_mux_4to1_procedural.check, S_0x5623d538b490;
+    %join;
+    %pushi/vec4 1668248174, 0, 32; draw_string_vec4
+    %pushi/vec4 25970, 0, 16; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x5623d538b670_0, 0, 48;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6610_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e66d0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6770_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6830_0, 0, 1;
+    %fork TD_tb_mux_4to1_procedural.check, S_0x5623d538b490;
+    %join;
+    %pushi/vec4 1668248174, 0, 32; draw_string_vec4
+    %pushi/vec4 25970, 0, 16; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x5623d538b670_0, 0, 48;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e6610_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e66d0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e6770_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e6830_0, 0, 1;
+    %fork TD_tb_mux_4to1_procedural.check, S_0x5623d538b490;
+    %join;
+    %pushi/vec4 1668248174, 0, 32; draw_string_vec4
+    %pushi/vec4 25970, 0, 16; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x5623d538b670_0, 0, 48;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e6610_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e66d0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6770_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6830_0, 0, 1;
+    %fork TD_tb_mux_4to1_procedural.check, S_0x5623d538b490;
+    %join;
+    %pushi/vec4 1668248174, 0, 32; draw_string_vec4
+    %pushi/vec4 25970, 0, 16; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x5623d538b670_0, 0, 48;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6610_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e66d0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6770_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6830_0, 0, 1;
+    %fork TD_tb_mux_4to1_procedural.check, S_0x5623d538b490;
+    %join;
+    %pushi/vec4 1668248174, 0, 32; draw_string_vec4
+    %pushi/vec4 25970, 0, 16; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x5623d538b670_0, 0, 48;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6610_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e66d0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e6770_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6830_0, 0, 1;
+    %fork TD_tb_mux_4to1_procedural.check, S_0x5623d538b490;
+    %join;
+    %pushi/vec4 1668248174, 0, 32; draw_string_vec4
+    %pushi/vec4 25970, 0, 16; draw_string_vec4
+    %concat/vec4; draw_string_vec4
+    %store/vec4 v0x5623d538b670_0, 0, 48;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6610_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e66d0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5623d53e6770_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5623d53e6830_0, 0, 1;
+    %fork TD_tb_mux_4to1_procedural.check, S_0x5623d538b490;
+    %join;
+    %vpi_call/w 3 101 "$display", "Test summary: %d passed, %d failed", v0x5623d53e77f0_0, v0x5623d53e7610_0 {0 0 0};
+    %vpi_call/w 3 102 "$finish" {0 0 0};
+    %end;
+    .thread T_4;
+# The file index is used to find the file name in the following table.
+:file_names 5;
+    "N/A";
+    "<interactive>";
+    "-";
+    "tb/tb_mux_4to1_procedural.v";
+    "rtl/mux_4to1_procedural.v";

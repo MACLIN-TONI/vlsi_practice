@@ -1,0 +1,6 @@
+1, parity generator-> to decide the parity bit.
+    ex, d_in: 1 1 1 1
+    to make the data to be even parity
+        -> no. of 1 required =0 (^d_in)
+    to make the data to be odd parity   
+        -> no. of 1 required =1 (~even_parity)
