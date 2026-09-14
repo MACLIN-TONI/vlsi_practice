@@ -7,8 +7,5 @@ mkdir -p $dut/{rtl,tb,sim,docs,waves}
 cd $dut
 touch rtl/$dut.v
 touch tb/tb_$dut.v
-
-touch docs/README.txt docs/notes.txt
-
 touch Makefile
 
