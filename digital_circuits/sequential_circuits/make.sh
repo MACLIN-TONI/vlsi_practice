@@ -8,7 +8,7 @@ cd $dut
 touch rtl/$dut.v
 touch tb/tb_$dut.v
 
-touch docs/README.txt docs/nots.txt
+touch docs/README.txt docs/notes.txt
 
 touch Makefile
 
