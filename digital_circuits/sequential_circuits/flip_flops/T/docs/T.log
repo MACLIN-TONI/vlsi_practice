@@ -1,0 +1,10 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+en= 0 |areset_n= 0 |t= 0 |q= 0 
+en= 0 |areset_n= 0 |t= 1 |q= 0 
+en= 0 |areset_n= 1 |t= 0 |q= 0 
+en= 0 |areset_n= 1 |t= 1 |q= 0 
+en= 1 |areset_n= 0 |t= 0 |q= 0 
+en= 1 |areset_n= 0 |t= 1 |q= 0 
+en= 1 |areset_n= 1 |t= 0 |q= 1 
+en= 1 |areset_n= 1 |t= 1 |q= 1 
+tb/tb_T.v:52: $finish called at 251000 (1ps)
