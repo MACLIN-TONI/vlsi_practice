@@ -1,0 +1,22 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+en = 1 | areset_n = 1 | out = 000
+en = 1 | areset_n = 1 | out = 111
+en = 1 | areset_n = 1 | out = 110
+en = 1 | areset_n = 1 | out = 101
+en = 1 | areset_n = 1 | out = 100
+en = 1 | areset_n = 1 | out = 011
+en = 1 | areset_n = 1 | out = 010
+en = 1 | areset_n = 1 | out = 001
+en = 1 | areset_n = 1 | out = 000
+en = 1 | areset_n = 1 | out = 111
+en = 1 | areset_n = 1 | out = 110
+en = 1 | areset_n = 1 | out = 101
+en = 1 | areset_n = 1 | out = 100
+en = 1 | areset_n = 1 | out = 011
+en = 1 | areset_n = 1 | out = 010
+en = 1 | areset_n = 1 | out = 001
+en = 1 | areset_n = 1 | out = 000
+en = 1 | areset_n = 1 | out = 111
+en = 1 | areset_n = 1 | out = 110
+en = 1 | areset_n = 1 | out = 101
+tb/tb_down_posedge.v:45: $finish called at 220000 (1ps)
