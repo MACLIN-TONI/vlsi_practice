@@ -1,0 +1,2 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+tb/tb_PIPO.v:54: $finish called at 120000 (1ps)
