@@ -1,5 +1,6 @@
 module JK_latch (
     input clk,
+    input areset_n,
     input j,
     input k,
     output q,
@@ -11,6 +12,6 @@ module JK_latch (
     nand (w2, k, clk, q);
 
     nand(q, w1, qb);
-    nand(qb, w2, q);
+    nand(qb, w2, q, areset_n);
 
 endmodule

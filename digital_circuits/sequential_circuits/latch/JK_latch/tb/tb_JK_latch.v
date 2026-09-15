@@ -1,6 +1,7 @@
 `timescale 1ns/1ps
 module tb_JK_latch;
     reg  clk;
+    reg areset_n;
     reg  j;
     reg  k;  
     wire q;
@@ -13,6 +14,7 @@ module tb_JK_latch;
 
     JK_latch dut (
         .clk(clk),
+        .areset_n(areset_n),
         .j(j),
         .k(k),
         .q(q),
@@ -29,34 +31,35 @@ module tb_JK_latch;
 
     // Change j/k only while clk is low (latch opaque) to avoid
     // the transparent-latch race-around when j=k=1 during clk=1.
-    // task check;
-    //     reg [1:0] a, b;
-    //     begin
-    //         for (a = 0; a < 2; a = a + 1) begin
-    //             for (b = 0; b < 2; b = b + 1) begin
+    task check;
+        reg [2:0] a, b;
+        begin
+            for (a = 0; a < 2; a = a + 1) begin
+                for (b = 0; b < 2; b = b + 1) begin
                     
-    //                 j = a; k = b;
+                    @(negedge clk) j = a; 
+                    @(negedge clk) k = b;
                     
-    //                 #6;
+                    #1;
                    
-    //                 $display("j=%b | k=%b | q=%b | qb=%b", j, k, q, qb);
-    //             end
-    //         end
-    //     end
-    // endtask
+                    $display("j=%b | k=%b | q=%b | qb=%b", j, k, q, qb);
+                end
+            end
+        end
+    endtask
 
     initial begin
-    
-        #6 j=0; k=0; 
-        #6 j=0;k=1;
-        #6 j=1;k=0;
-        #6 j=1;k=1;
-        #6 j=0; k=0; 
-        #6 j=0;k=1;
-        #6 j=1;k=0;
-        #6 j=1;k=1;
+        j=0;
+        k=0;
+        areset_n=0;
+    end
 
-        #10 $finish;
+    initial begin
+        #10 areset_n=1;
+        check();
+        check();
+
+        #50 $finish;
         
     end
 

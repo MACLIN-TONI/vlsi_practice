@@ -1,2 +1,10 @@
 VCD info: dumpfile waves/dump.vcd opened for output.
-tb/tb_JK_latch.v:59: $finish called at 58000 (1ps)
+j=0 | k=0 | q=0 | qb=1
+j=0 | k=1 | q=0 | qb=1
+j=1 | k=0 | q=1 | qb=0
+j=1 | k=1 | q=1 | qb=0
+j=0 | k=0 | q=0 | qb=1
+j=0 | k=1 | q=0 | qb=1
+j=1 | k=0 | q=1 | qb=0
+j=1 | k=1 | q=1 | qb=0
+tb/tb_JK_latch.v:62: $finish called at 123000 (1ps)
