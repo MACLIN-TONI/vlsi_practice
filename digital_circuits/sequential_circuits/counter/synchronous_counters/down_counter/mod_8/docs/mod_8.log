@@ -1,0 +1,22 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+en = 1 | areset_n = 1 | out = 0
+en = 1 | areset_n = 1 | out = 7
+en = 1 | areset_n = 1 | out = 6
+en = 1 | areset_n = 1 | out = 5
+en = 1 | areset_n = 1 | out = 4
+en = 1 | areset_n = 1 | out = 3
+en = 1 | areset_n = 1 | out = 2
+en = 1 | areset_n = 1 | out = 1
+en = 1 | areset_n = 1 | out = 0
+en = 1 | areset_n = 1 | out = 7
+en = 1 | areset_n = 1 | out = 6
+en = 1 | areset_n = 1 | out = 5
+en = 1 | areset_n = 1 | out = 4
+en = 1 | areset_n = 1 | out = 3
+en = 1 | areset_n = 1 | out = 2
+en = 1 | areset_n = 1 | out = 1
+en = 1 | areset_n = 1 | out = 0
+en = 1 | areset_n = 1 | out = 7
+en = 1 | areset_n = 1 | out = 6
+en = 1 | areset_n = 1 | out = 5
+tb/tb_mod_8.v:43: $finish called at 240000 (1ps)
