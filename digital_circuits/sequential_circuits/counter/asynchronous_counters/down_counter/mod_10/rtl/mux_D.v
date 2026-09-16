@@ -12,12 +12,9 @@ module mux_D(
 
     assign in = (load)?p_in:qb_in;
 
-    always @(posedge clk, negedge areset_n, posedge load) begin
+    always @(posedge clk, areset_n, load) begin
         if(~areset_n) begin
             out <= 0;
-        end
-        else if(load) begin
-            out <= in;
         end
         else if(~en) begin
             out <=out;
