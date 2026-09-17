@@ -1,0 +1,20 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+en = 1 | areset_n = 1 | in = 0 | out = 0
+en = 1 | areset_n = 1 | in = 0 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 0
+en = 1 | areset_n = 1 | in = 0 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 0
+en = 1 | areset_n = 1 | in = 0 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 1
+en = 1 | areset_n = 1 | in = 1 | out = 0
+en = 1 | areset_n = 1 | in = 0 | out = 0
+en = 1 | areset_n = 1 | in = 0 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 0
+en = 1 | areset_n = 1 | in = 0 | out = 0
+en = 1 | areset_n = 1 | in = 1 | out = 1
+en = 1 | areset_n = 1 | in = 1 | out = 0
+tb/tb_s_0110_non_overlapping.v:63: $finish called at 191000 (1ps)
