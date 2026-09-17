@@ -1,0 +1,2 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+tb/tb_shift.v:45: $finish called at 130000 (1ps)
