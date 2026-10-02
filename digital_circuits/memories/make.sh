@@ -25,22 +25,22 @@ WAVE = waves/dump.vcd
 LOG = docs/\$(DUT).log
 
 compile:
-\tiverilog -g2012 -o \$(SIM) \$(RTL) \$(TB)
+	iverilog -g2012 -o \$(SIM) \$(RTL) \$(TB)
 
 run: compile
-\tvvp \$(SIM) | tee \$(LOG)
+	vvp \$(SIM) | tee \$(LOG)
 
 wave: run
-\tgtkwave \$(WAVE) &
+	gtkwave \$(WAVE) &
 
 check: run
-\t@echo "---FAILURES---"
-\t@grep "FAIL" \$(LOG) || echo "NONE"
-\t@echo "---SUMMARY---"
-\t@grep "summary\|PASS\|FAIL" \$(LOG) | tail -2
+	@echo "---FAILURES---"
+	@grep "FAIL" \$(LOG) || echo "NONE"
+	@echo "---SUMMARY---"
+	@grep "summary\|PASS\|FAIL" \$(LOG) | tail -2
 
 clean:
-\trm -f \$(SIM) \$(WAVE) \$(LOG)
+	rm -f \$(SIM) \$(WAVE) \$(LOG)
 
 .PHONY: compile run wave check clean
 EOF

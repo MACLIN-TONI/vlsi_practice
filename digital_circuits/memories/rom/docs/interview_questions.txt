@@ -1,0 +1,218 @@
+ROM: Interview Questions and Answers
+====================================
+
+ROM fundamentals
+----------------
+
+1. What is a ROM, and how does it differ from RAM?
+
+A ROM (read-only memory) returns fixed data selected by an address. Its contents
+are not changed during normal operation. RAM can be written during operation.
+
+2. What does a 16 x 8 ROM mean? How many bits does it store?
+
+It has 16 entries, each 8 bits wide, for 16 x 8 = 128 bits total.
+
+3. How many address bits are needed to select 16 ROM entries?
+
+Four bits, because 2^4 = 16. They represent addresses 0 through 15.
+
+4. What is a lookup table, and how does an address select an output value?
+
+A lookup table is a fixed mapping from each input combination to a stored or
+specified output value. Here, the 4-bit address selects one of 16 eight-bit
+seven-segment patterns.
+
+5. Is this ROM synchronous or combinational? How can you tell from its interface?
+
+It is combinational. It has no clock, and the RTL uses a combinational process
+(`always @(*)`) to derive `data` from `addr`.
+
+6. What happens to the output when the address changes?
+
+The output changes to the table value for the new address after combinational
+logic propagation. It does not wait for a clock edge.
+
+7. Does this ROM need a clock, write enable, reset, or data input? Why?
+
+No. It is a fixed combinational lookup: the address selects a constant output.
+There is no state to reset and no write operation, so clock, write-enable, and
+write-data inputs are unnecessary.
+
+RTL and logic behavior
+----------------------
+
+8. Why is the output declared as a variable type when assigned in an always
+block?
+
+In Verilog, a signal assigned procedurally in an `always` block must be a
+variable type such as `reg`. `reg` is a language data type here; it does not by
+itself mean the output is a flip-flop. In SystemVerilog, `logic` is commonly
+used instead.
+
+9. Why must a combinational process assign its output for every possible input?
+
+If an output is not assigned on some path, the design must retain its previous
+value on that path. That implies storage instead of purely combinational logic.
+
+10. What hardware behavior can result if a combinational output is not assigned
+on every path?
+
+A latch may be inferred. A latch is level-sensitive storage, which is generally
+unintended in a combinational lookup table and can complicate timing and
+synthesis.
+
+11. Why is a default branch useful in a case statement?
+
+It provides an assignment when no listed case matches, helping ensure the
+output is assigned on every path. In this ROM all 16 binary addresses are
+listed; the default is a fallback for simulation values containing X or Z.
+
+12. What is the difference between `case`, `casez`, and `casex` in Verilog?
+
+`case` compares all bits exactly, including X and Z. `casez` treats Z and `?`
+as wildcards. `casex` treats both X and Z as wildcards, which can hide unknown
+or uninitialized values and is usually avoided in synthesizable RTL.
+
+13. How could the lookup table be written using a continuous assignment or a
+SystemVerilog `always_comb` block?
+
+A continuous assignment could use nested conditional (`?:`) expressions, but
+that becomes difficult to read for 16 entries. In SystemVerilog, use
+`always_comb` with a `case (addr)` and assign `data` in every branch. The
+existing Verilog `always @(*)` plus `case` is also suitable.
+
+14. How would you parameterize or expand the ROM for a different table size or
+data width?
+
+Define `DEPTH` and `DATA_WIDTH` parameters, size the address and output
+accordingly, and provide contents for the chosen depth. In SystemVerilog,
+`$clog2(DEPTH)` can derive the address width, with care for `DEPTH == 1` and
+non-power-of-two depths. For large or configurable tables, contents may be
+loaded from a file or parameterized array, depending on tool support.
+
+Seven-segment encoding
+----------------------
+
+15. In this design, which output bits represent the decimal point and segments
+a through g?
+
+The encoding is `data[7:0] = {dp, g, f, e, d, c, b, a}`. Bit 7 is the decimal
+point; bits 6 through 0 are segments g through a. The decimal point is always
+zero (off).
+
+16. What does active-high segment encoding mean? How would active-low encoding
+change the patterns?
+
+Active-high means a 1 turns a segment on and a 0 turns it off. For active-low,
+a 0 turns a segment on and a 1 turns it off, so the segment pattern bits are
+inverted. The decimal-point polarity must follow the same convention.
+
+17. Why are the hexadecimal digit patterns for B and D commonly shown as
+lowercase-style characters on a seven-segment display?
+
+A seven-segment display cannot clearly distinguish uppercase B from the digit
+8, or uppercase D from 0. Lowercase-style `b` and `d` are conventional patterns
+that are easier to tell apart.
+
+18. How would you verify that the decimal-point output remains off for every
+address?
+
+Apply all addresses 0 through 15 and assert `data[7] === 1'b0` for every one.
+The current testbench's exact 8-bit comparisons also check this bit implicitly.
+
+Synthesis and implementation
+----------------------------
+
+19. What logic might a synthesis tool infer from this combinational ROM?
+
+It may implement the address-to-data mapping as a decoder and logic network,
+optimized Boolean logic, or a small lookup table in available programmable
+logic resources.
+
+20. Can this RTL be implemented using a physical memory block, or might it map
+to combinational logic? What affects that choice?
+
+Either is possible, depending on the target device, memory resources, table
+size, coding style, timing constraints, and synthesis tool. A small
+combinational table often maps to logic; some FPGAs can implement ROM contents
+in LUTs or memory blocks. RTL alone does not guarantee a particular mapping.
+
+21. What is the tradeoff between a combinational ROM and a synchronous ROM?
+
+A combinational ROM has no clock latency; its output follows the address after
+logic propagation, but the path delay can limit timing. A synchronous ROM
+registers the read result on a clock edge, adding clocked latency while often
+making timing easier and improving compatibility with block-memory resources.
+
+22. What changes would be needed to make the ROM synchronous?
+
+Add a clock input and register the selected table value on a clock edge, for
+example with `always @(posedge clk)` and a registered output. The output then
+updates after the edge that samples the address. Define the expected latency
+and reset behavior as part of the interface spec.
+
+23. Why should the ROM contents be constants rather than values written during
+normal operation?
+
+Fixed contents are what make this design a ROM. If normal operation can write
+and change the stored values, it is functioning as writable memory (RAM), even
+if its initial contents are fixed.
+
+Testbench and verification
+--------------------------
+
+24. How should a testbench verify all entries in this 16-entry lookup table?
+
+Loop through addresses 0 to 15, apply each address, allow combinational logic
+to settle, and compare the output to an independently maintained expected
+value. Also check the decimal-point bit and report a clear pass/fail summary.
+
+25. Why should the testbench use case equality (`===`) when checking the output?
+
+Case equality treats X and Z as values and always returns 0 or 1. An unknown
+output compared against a known expected pattern therefore fails clearly.
+With logical equality (`==`), an unknown operand can make the comparison itself
+unknown.
+
+26. Why is a delay or another sampling step used after changing the address in a
+simulation testbench?
+
+The address change triggers combinational processes, which execute through
+simulation event regions/delta cycles. Sampling after the logic settles avoids
+checking the output in the same instant before its update. A small delay is
+simple for this exercise; clocking or scheduling regions are used in more
+advanced SystemVerilog testbenches.
+
+27. What does a complete table test cover, and what possible bugs might it still
+miss?
+
+Checking all 16 binary addresses covers every specified table entry. It can
+still miss a shared error in the RTL and expected table, behavior for X/Z
+addresses outside the spec, display wiring/polarity mistakes, and synthesis or
+physical timing issues.
+
+28. Why can duplicating the expected lookup table in the testbench and RTL hide
+a common transcription error?
+
+If the same wrong value is copied into both the DUT and expected table, the
+comparison passes even though the design disagrees with the intended encoding.
+Use an independently derived reference table or source the expected values
+from a separately reviewed specification.
+
+29. How would you make a failed test cause the simulation or build to report an
+error status?
+
+In the testbench, call `$fatal(1, ...)` when a mismatch occurs, or finish with a
+failure status after reporting the summary. Ensure the build recipe propagates
+the simulator's exit status; if output is piped through `tee`, enable shell
+`pipefail` or otherwise preserve the simulator status.
+
+30. How would you test the design when the address contains X or Z, and is that
+behavior part of the current functional specification?
+
+You can assign an address containing X or Z and check the RTL's default-branch
+behavior with case equality. In this RTL, the default returns `8'h00`. However,
+the spec defines behavior only for binary addresses 0 through 15, so X/Z
+handling is an optional simulation robustness check, not a required functional
+case. X and Z are simulation values, not ordinary physical logic levels.

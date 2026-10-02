@@ -1,0 +1,21 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | addr = 0 | data = 3f | exp_data = 3f
+PASS | addr = 1 | data = 06 | exp_data = 06
+PASS | addr = 2 | data = 5b | exp_data = 5b
+PASS | addr = 3 | data = 4f | exp_data = 4f
+PASS | addr = 4 | data = 66 | exp_data = 66
+PASS | addr = 5 | data = 6d | exp_data = 6d
+PASS | addr = 6 | data = 7d | exp_data = 7d
+PASS | addr = 7 | data = 07 | exp_data = 07
+PASS | addr = 8 | data = 7f | exp_data = 7f
+PASS | addr = 9 | data = 6f | exp_data = 6f
+PASS | addr = a | data = 77 | exp_data = 77
+PASS | addr = b | data = 7c | exp_data = 7c
+PASS | addr = c | data = 39 | exp_data = 39
+PASS | addr = d | data = 5e | exp_data = 5e
+PASS | addr = e | data = 79 | exp_data = 79
+PASS | addr = f | data = 71 | exp_data = 71
+SUMMARY
+PASS =          16
+FAIL =           0
+tb/tb_rom.v:70: $finish called at 116000 (1ps)

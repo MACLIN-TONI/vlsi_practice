@@ -1,0 +1,70 @@
+16 x 8 Combinational ROM: RTL Specification
+===========================================
+
+1. Module
+---------
+
+Module name: rom
+
+2. Interface
+------------
+
+Port   Direction  Width  Description
+-----  ---------  -----  ---------------------------------------------
+addr   input      4      Hexadecimal digit, valid values 0 through 15.
+data   output     8      Active-high seven-segment pattern plus decimal point.
+
+There is no clock, write enable, reset, or data input.
+
+3. Functional behavior
+----------------------
+
+The ROM implements a fixed combinational lookup table. For every binary addr
+value, data must equal the corresponding table entry below. When addr changes,
+data updates through combinational logic without waiting for a clock edge.
+
+The output encoding is data[7:0] = {dp, g, f, e, d, c, b, a}:
+
+- A segment is on when its bit is 1.
+- data[7] is the decimal point and is always 0.
+
+Address (hex)  data (hex)  Segments on
+-------------  ----------  -----------
+0              3F          a b c d e f
+1              06          b c
+2              5B          a b d e g
+3              4F          a b c d g
+4              66          b c f g
+5              6D          a c d f g
+6              7D          a c d e f g
+7              07          a b c
+8              7F          a b c d e f g
+9              6F          a b c d f g
+A              77          a b c e f g
+B              7C          c d e f g
+C              39          a d e f
+D              5E          b c d e g
+E              79          a d e f g
+F              71          a e f g
+
+4. RTL requirements
+-------------------
+
+- Implement the table as combinational logic (for example, `always @(*)` and
+  `case (addr)`).
+- Assign data for every address so the design does not infer a latch.
+- Use explicit 8-bit output constants matching the table.
+- A default assignment may return 8'h00 for an address containing X or Z in
+  simulation; behavior for unknown addresses is not part of the binary-input
+  functional specification.
+
+5. Testbench requirements
+-------------------------
+
+- Apply each address from 0 through 15 and check the exact output from the
+  table.
+- Check addresses 0, 1, A, and F explicitly as representative patterns.
+- Change addr between simulation times and verify data responds without any
+  clock signal.
+- Check that data[7] is 0 for all 16 addresses.
+- Use case equality (`===`) so an unknown output is reported as a failure.
