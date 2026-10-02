@@ -19,8 +19,7 @@ PASS | addr = 3 | dout = cc | exp_dout = cc
 PASS | addr = 2 | dout = 0f | exp_dout = 0f
 PASS | addr = 4 | dout = 88 | exp_dout = 88
 PASS | addr = 6 | dout = 99 | exp_dout = 99
-WARNING: tb/tb_single_port_ram.v:142: unknown format $display<%6 >.
-PASS | addr = <%6 >| dout = 7 | exp_dout = 99153
+PASS | addr = 00000006 | dout = 99 | exp_dout = 99
 SUMMARY:
 PASS =          21
 FAIL =           0

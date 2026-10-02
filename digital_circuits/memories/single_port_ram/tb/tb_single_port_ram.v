@@ -139,11 +139,11 @@ module tb_single_port_ram;
         @(posedge clk) begin
             #1;
             if(dout === 8'h99) begin
-                $display("PASS | addr = %6 | dout = %h | exp_dout = %h", addr,dout, 8'h99);
+                $display("PASS | addr = %h | dout = %h | exp_dout = %h", 6,dout, 8'h99);
                 PASS = PASS + 1;
             end
             else begin
-                $display("FAIL | addr = %6 | dout = %h | exp_dout = %h", addr,dout, 8'h99);
+                $display("FAIL | addr = %h | dout = %h | exp_dout = %h", 6,dout, 8'h99);
                 FAIL = FAIL + 1;
             end
         end
