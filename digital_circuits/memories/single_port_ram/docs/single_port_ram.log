@@ -1,0 +1,27 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | addr = 0 | dout = 00 | exp_dout = 00
+PASS | addr = 1 | dout = ff | exp_dout = ff
+PASS | addr = 2 | dout = 0f | exp_dout = 0f
+PASS | addr = 3 | dout = f0 | exp_dout = f0
+PASS | addr = 4 | dout = 88 | exp_dout = 88
+PASS | addr = 5 | dout = 11 | exp_dout = 11
+PASS | addr = 6 | dout = 99 | exp_dout = 99
+PASS | addr = 7 | dout = 10 | exp_dout = 10
+PASS | addr = 8 | dout = 01 | exp_dout = 01
+PASS | addr = 9 | dout = 29 | exp_dout = 29
+PASS | addr = a | dout = 2a | exp_dout = 2a
+PASS | addr = b | dout = 2b | exp_dout = 2b
+PASS | addr = c | dout = 2c | exp_dout = 2c
+PASS | addr = d | dout = 2d | exp_dout = 2d
+PASS | addr = e | dout = 2e | exp_dout = 2e
+PASS | addr = f | dout = 2f | exp_dout = 2f
+PASS | addr = 3 | dout = cc | exp_dout = cc
+PASS | addr = 2 | dout = 0f | exp_dout = 0f
+PASS | addr = 4 | dout = 88 | exp_dout = 88
+PASS | addr = 6 | dout = 99 | exp_dout = 99
+WARNING: tb/tb_single_port_ram.v:142: unknown format $display<%6 >.
+PASS | addr = <%6 >| dout = 7 | exp_dout = 99153
+SUMMARY:
+PASS =          21
+FAIL =           0
+tb/tb_single_port_ram.v:157: $finish called at 446000 (1ps)

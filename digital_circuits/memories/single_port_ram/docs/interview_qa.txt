@@ -1,0 +1,202 @@
+Single-Port Synchronous RAM: Interview Q&A
+==========================================
+
+RTL AND MEMORY BEHAVIOR
+-----------------------
+
+1. What does `reg [7:0] mem [0:15]` declare? How many bits does it store?
+
+It declares an unpacked array with 16 entries, indexed 0 through 15. Each entry
+is 8 bits wide, so the total storage capacity is 16 x 8 = 128 bits. The first
+range describes the width of each word; the second range describes the array
+indices.
+
+2. How many address bits are needed to select 16 words, and why?
+
+Four bits are needed because 2^4 = 16. A 4-bit address can represent 0 through
+15, which selects every word in this RAM.
+
+3. Why is `dout` declared as a register?
+
+In Verilog, a signal assigned procedurally inside an `always` block must be a
+variable type such as `reg`. `dout` is assigned in the clocked `always` block,
+so it is declared `output reg`. This is a Verilog data-type rule; it does not
+mean that `dout` is a software register. In SystemVerilog, `logic` is commonly
+used for this purpose.
+
+4. What makes this a synchronous-read RAM? When does `dout` change?
+
+The read occurs inside `always @(posedge clk)`. The address is sampled on the
+rising clock edge, and `dout` is updated after that edge if `we` is low. A
+change to `addr` between rising edges does not immediately change `dout`.
+
+5. What happens to `dout` on a write cycle?
+
+When `we` is high at a rising edge, the selected memory word is written with
+`din`. The RTL does not assign `dout` on that branch, so `dout` holds its
+previous value.
+
+6. What are the simulation values of `mem` and `dout` before they are written
+or read?
+
+They are unknown (`X`) in four-state simulation. The testbench should write a
+location before expecting a known value when reading it. `dout` becomes known
+after reading a location whose contents are known.
+
+7. Why might resetting every memory word prevent memory-block inference in
+hardware?
+
+Many FPGA block RAMs and ASIC memory macros do not support clearing every
+stored bit through a reset pin. A reset loop may therefore make the array
+ineligible for that memory resource, causing the tool to implement it from
+flip-flops and logic or report that it cannot map the desired structure. The
+exact result depends on the target technology and synthesis tool. Reset
+control/output registers separately when that matches the design requirements.
+
+8. How would you add a separate read enable? What should `dout` do when reads
+are disabled?
+
+Add an input such as `re`. In the clocked block, handle writes when `we` is
+high; otherwise read only when `re` is high. When neither operation is enabled,
+leave `dout` unassigned in that clocked branch so it holds its previous value.
+Specify what should happen if `we` and `re` are both high; a common choice is
+write priority, but the behavior must be explicit.
+
+9. How would the design change if reads were asynchronous?
+
+Read `mem[addr]` combinationally, for example with `assign dout = mem[addr];`
+or a combinational process. Then `dout` changes when `addr` changes, without
+waiting for a clock edge. This changes the read timing and may affect which
+memory resources synthesis can infer.
+
+10. How would you parameterize the data width and memory depth?
+
+Introduce parameters such as `DATA_WIDTH` and `DEPTH`; declare the array using
+those values and size `din`/`dout` accordingly. Derive the address width as
+ceil(log2(DEPTH)), for example with `$clog2(DEPTH)` in SystemVerilog. Handle
+small or non-power-of-two depths deliberately: `$clog2(1)` is zero, and some
+addresses may be unused when depth is not a power of two.
+
+READ/WRITE BEHAVIOR AND IMPLEMENTATION
+--------------------------------------
+
+11. Can this interface read and write on the same clock edge? Why or why not?
+
+No. The single `we` input selects the operation: high means write, low means
+read. The design has no independent read enable, so it cannot request both
+operations on one edge.
+
+12. What does read-during-write behavior mean? How would it matter in a design
+with separate read and write enables?
+
+It describes the read output when a read and a write happen on the same clock
+edge, especially when they target the same address. Common behaviors are
+read-first (old data), write-first (new data), and no-change (hold output).
+This RAM's interface does not allow simultaneous read and write, so the case
+does not arise here. With separate enables, choose and document the behavior;
+the target memory hardware may constrain which modes are available.
+
+13. How would you support byte enables?
+
+Add one write-enable bit per byte lane. On a write edge, update only the byte
+lanes whose enable bits are set, leaving the other bits unchanged. For an
+8-bit word, one byte-enable bit controls the whole word; wider words can have
+one enable per 8-bit lane. Check that the synthesis target supports the desired
+write granularity.
+
+14. How would you change the design to have two read ports?
+
+Add a second read address and second registered output, then sample both
+addresses on the clock edge and update both outputs from the memory. Writes
+can still use one write port. Whether this maps efficiently to a memory block
+or requires replicated/distributed storage depends on the device and its
+available memory-port configurations.
+
+15. What hardware might this RTL infer when synthesized?
+
+It describes a 16 x 8 memory with a synchronous read and a single write/read
+port selected by `we`. A synthesis tool may map it to an FPGA RAM block, an
+ASIC memory macro, or logic built from registers and muxes. The result depends
+on the target library, inference templates, constraints, and tool support; RTL
+alone does not guarantee a particular physical implementation.
+
+16. What tradeoffs arise when increasing depth or data width?
+
+The storage bit count grows as depth x width. Greater depth needs more address
+bits and may increase access time or resource use. Greater width increases
+storage and data-path size. Port count, reset behavior, byte enables, and
+required clock frequency can also affect area, timing, and which memory
+resources are usable.
+
+TESTBENCH AND VERIFICATION
+--------------------------
+
+17. What role does `expected_mem` play in the testbench?
+
+It is a reference model: the testbench records each value it writes and uses
+that model to calculate the expected value for later reads. Comparing `dout`
+against it checks whether the DUT's externally visible behavior matches the
+expected memory contents.
+
+18. Why does the testbench use `dout === expected` instead of `dout == expected`?
+
+Case equality (`===`) treats X and Z as literal values and always returns a
+known 0 or 1. Thus an unexpected X in `dout` causes a mismatch against a known
+expected value. Logical equality (`==`) can itself evaluate to X when either
+operand contains X or Z, which can make checks less clear.
+
+19. Why must the testbench write an address before expecting a known value
+from it?
+
+The RTL does not initialize the memory. An unwritten location therefore has
+an unknown simulated value. Writing it first establishes a known expected
+contents value for a meaningful read comparison.
+
+20. How does the testbench check that the read is synchronous?
+
+It changes the address at a falling edge, checks that `dout` still holds before
+the next rising edge, then checks the expected data shortly after the rising
+edge. That verifies the address change alone does not update the registered
+output.
+
+21. How does it check that `dout` holds its value during a write?
+
+The write task first establishes a known output, applies a write, and checks
+`dout` before and after the rising write edge against its previous expected
+value. It skips the hold check before the first known read because the initial
+output is unknown.
+
+22. Which corner cases does the testbench cover? What would you add?
+
+It writes and reads all 16 addresses, uses varied data patterns, checks
+address independence, overwrites selected locations, checks output hold during
+writes, checks synchronous read timing, and performs consecutive reads and
+writes. Useful additions include randomized address/data sequences, more
+systematic walking-one and walking-zero patterns, and explicit checks that
+unwritten locations are not assumed to have a particular value. Out-of-range
+addresses and reset behavior do not apply to the fixed 4-bit, no-reset
+interface.
+
+23. How would you test all addresses and multiple data patterns
+systematically?
+
+Use loops to write a known pattern to each address, then read every address
+and compare against a reference array. Repeat with complementary or walking-bit
+patterns. The presented testbench writes distinct patterns across all addresses
+and reads the full address range, then adds overwrite and neighbor checks.
+
+24. What does the waveform file help you debug?
+
+The VCD waveform records signal values over simulation time. A viewer can show
+when `we`, `addr`, and `din` are driven relative to clock edges and when `dout`
+changes. It helps diagnose timing and stimulus mistakes, but it does not
+replace self-checking assertions or comparisons.
+
+25. Does a passing testbench prove the RTL is correct? What can still be
+missed?
+
+No. It shows that the DUT passed the scenarios and checks that were run. Bugs
+may remain in untested cases, the reference model may share an incorrect
+assumption, or the RTL may synthesize differently than intended. Broader
+verification, code review, linting, and synthesis checks provide additional
+evidence but do not turn a finite test suite into a mathematical proof.

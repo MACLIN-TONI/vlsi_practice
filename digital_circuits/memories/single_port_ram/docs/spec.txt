@@ -1,0 +1,76 @@
+Single-Port Synchronous RAM: RTL Specification
+==============================================
+
+1. Module
+---------
+
+Module name: single_port_ram
+
+2. Interface
+------------
+
+Port       Direction  Width  Description
+---------  ---------  -----  ----------------------------------------------
+clk        input      1      Clock. Operations occur on its rising edge.
+we         input      1      1 = write; 0 = read.
+addr       input      4      Word address, valid range 0 to 15.
+din        input      8      Data written to memory.
+dout       output     8      Registered data from a read.
+
+Storage: 16 words x 8 bits.
+
+3. Clocked behavior
+-------------------
+
+At each rising edge of clk:
+
+- If we == 1: mem[addr] <= din. dout holds its previous value.
+- If we == 0: dout <= mem[addr]. Memory contents do not change.
+
+addr and din are sampled at the rising edge. Changes to inputs between rising
+edges do not change memory contents or dout. A read result appears after the
+rising edge that samples its address (registered synchronous read).
+
+4. Reset and initialization
+---------------------------
+
+- There is no reset input.
+- Do not initialize or clear the memory array in the RTL.
+- Initial memory contents and initial dout are unknown (X) in simulation.
+- The testbench must write a location before checking the value read from it.
+
+5. Read/write collision
+-----------------------
+
+The single we input selects exactly one operation on each rising edge. A read
+and write cannot occur simultaneously, so same-address read/write collision
+behavior is not applicable.
+
+6. Reference transactions
+-------------------------
+
+Each transaction is applied before a rising edge; expected dout is checked
+shortly after that edge.
+
+Operation       we  addr  din  Expected dout after rising edge
+--------------  --  ----  ---  ------------------------------
+Write address 3 1   3     A5   Holds previous value
+Read address 3  0   3     --   A5
+Write address 9 1   9     3C   Holds previous value
+Read address 9  0   9     --   3C
+Read address 3  0   3     --   A5
+Overwrite addr 3 1  3     5A   Holds previous value
+Read address 3  0   3     --   5A
+
+Hex values are 8-bit data values. The first write's expected dout is unknown
+unless a previous read has already established it.
+
+7. Verification checklist
+-------------------------
+
+- Write and read back multiple addresses.
+- Confirm each address retains its own value.
+- Overwrite an address and confirm the new value is returned.
+- Confirm dout holds its previous value on write edges.
+- Change addr between rising edges and confirm dout does not change.
+- Avoid checking unwritten locations because their contents are unspecified.
