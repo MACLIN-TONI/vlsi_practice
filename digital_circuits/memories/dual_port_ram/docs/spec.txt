@@ -1,0 +1,73 @@
+Simple Dual-Port Synchronous RAM: RTL Specification
+===================================================
+
+1. Module
+---------
+
+Module name: dual_port_ram
+
+2. Configuration
+----------------
+
+- Depth: 16 words.
+- Word width: 8 bits.
+- Read and write address widths: 4 bits each.
+- Valid addresses: 0 through 15.
+- One shared clock; one independent read port and one independent write port.
+
+3. Interface
+------------
+
+Port      Direction  Width  Description
+--------  ---------  -----  ----------------------------------------------
+clk       input      1      Clock. Operations occur on its rising edge.
+we        input      1      Write enable; 1 writes one word.
+wr_addr   input      4      Address selected by the write port.
+wr_data   input      8      Data written when we is high.
+re        input      1      Read enable; 1 updates the registered read output.
+rd_addr   input      4      Address selected by the read port.
+rd_data   output     8      Registered data returned by the read port.
+
+4. Clocked behavior
+-------------------
+
+At each rising edge of clk, the read and write ports operate independently:
+
+- If we == 1, write wr_data to mem[wr_addr]. Otherwise, memory contents do not
+  change.
+- If re == 1, schedule rd_data to receive the contents at rd_addr. Otherwise,
+  rd_data holds its previous value.
+- A read result is registered and appears after the rising edge that samples
+  rd_addr.
+
+5. Same-address collision behavior
+----------------------------------
+
+If we == 1 and re == 1 on the same rising edge, and wr_addr == rd_addr:
+
+- rd_data receives the old contents of that address (read-first behavior).
+- The memory location is updated with wr_data after the edge.
+
+If both ports are enabled but the addresses differ, rd_data receives the
+contents of mem[rd_addr], while mem[wr_addr] is updated with wr_data.
+
+6. Reset and initialization
+---------------------------
+
+- There is no reset input.
+- Do not initialize or clear the memory array in the RTL.
+- Initial memory contents and initial rd_data are unspecified (X in simulation).
+- The testbench must write an address before expecting known data from it.
+
+7. Testbench requirements
+-------------------------
+
+- Write and read back multiple addresses; confirm each address retains its own
+  value.
+- Exercise reads and writes on different addresses at the same clock edge.
+- Exercise simultaneous read and write to the same address and check read-first
+  behavior: old data on rd_data, new data stored for a later read.
+- Check that rd_data holds when re == 0, including while a write occurs.
+- Check that no write occurs when we == 0.
+- Check overwrite behavior and boundary addresses 0 and 15.
+- Do not check an unwritten location for a specific value.

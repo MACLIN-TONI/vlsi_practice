@@ -1,0 +1,25 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | re = 1 | rd_addr = 0 | rd_data = ff | exp_rd_data = ff
+PASS | re = 1 | rd_addr = 1 | rd_data = 00 | exp_rd_data = 00
+PASS | re = 1 | rd_addr = 2 | rd_data = f0 | exp_rd_data = f0
+PASS | re = 1 | rd_addr = 3 | rd_data = 0f | exp_rd_data = 0f
+PASS | re = 1 | rd_addr = 4 | rd_data = aa | exp_rd_data = aa
+PASS | re = 1 | rd_addr = 5 | rd_data = 55 | exp_rd_data = 55
+PASS | re = 1 | rd_addr = 6 | rd_data = 10 | exp_rd_data = 10
+PASS | re = 1 | rd_addr = 7 | rd_data = 01 | exp_rd_data = 01
+PASS | re = 1 | rd_addr = 8 | rd_data = 80 | exp_rd_data = 80
+PASS | re = 1 | rd_addr = 9 | rd_data = 08 | exp_rd_data = 08
+PASS | re = 1 | rd_addr = a | rd_data = 9a | exp_rd_data = 9a
+PASS | re = 1 | rd_addr = b | rd_data = 9b | exp_rd_data = 9b
+PASS | re = 1 | rd_addr = c | rd_data = 9c | exp_rd_data = 9c
+PASS | re = 1 | rd_addr = d | rd_data = 9d | exp_rd_data = 9d
+PASS | re = 1 | rd_addr = e | rd_data = 9e | exp_rd_data = 9e
+PASS | re = 1 | rd_addr = f | rd_data = 9f | exp_rd_data = 9f
+PASS | re = 1 | rd_addr = 5 | rd_data = 55 | exp_rd_data = 55
+PASS | re = 1 | rd_addr = 5 | rd_data = 77 | exp_rd_data = 77
+PASS | re = 0 | rd_addr = 9 | rd_data = 77 | exp_rd_data = 77
+PASS | re = 1 | rd_addr = 9 | rd_data = 08 | exp_rd_data = 08
+SUMMARY
+PASS =          20
+FAIL =           0
+tb/tb_dual_port_ram.v:133: $finish called at 426000 (1ps)

@@ -1,0 +1,210 @@
+Simple Dual-Port RAM: Interview Questions and Answers
+=====================================================
+
+Concepts and interface
+----------------------
+
+1. What is a simple dual-port RAM?
+
+It is a memory with two access ports that have different roles: one port reads
+and one port writes. With independent controls and addresses, a read and a
+write can occur on the same clock edge.
+
+2. How does simple dual-port RAM differ from single-port and true dual-port
+RAM?
+
+A single-port RAM has one access port and chooses between read and write. A
+simple dual-port RAM has one read-only port and one write-only port. A true
+dual-port RAM generally lets both ports read or write, subject to the device's
+port and collision rules.
+
+3. What does a 16 x 8 memory contain, and how wide must each address be?
+
+It contains 16 words of 8 bits, or 128 storage bits total. Four address bits
+are required because 2^4 = 16.
+
+4. What are the roles of `we`, `wr_addr`, `wr_data`, `re`, `rd_addr`, and
+`rd_data`?
+
+`we` enables a write of `wr_data` to `wr_addr`. `re` enables a read from
+`rd_addr`; the registered result appears on `rd_data`. The independent
+addresses allow a read and a write to target different locations on the same
+edge.
+
+5. Is the read synchronous or asynchronous? How can you tell?
+
+It is synchronous because `rd_data` is assigned in a process sensitive to the
+rising edge of `clk`. Changing `rd_addr` alone does not immediately update the
+output.
+
+6. What happens when `re` is low?
+
+The read output holds its previous value because the clocked process does not
+assign a new value to `rd_data` in that case.
+
+7. What happens when `we` is low?
+
+The memory contents do not change. A write should occur only on a rising edge
+where `we` is high.
+
+8. Does this design have reset behavior?
+
+No. The interface has no reset, and the memory array is not initialized. Its
+initial contents and the initial output are unknown in simulation. The
+verification environment should write locations before expecting known data.
+
+Collision behavior and RTL
+--------------------------
+
+9. What is a read/write collision?
+
+It is a clock edge where the read and write ports are both enabled and access
+the same memory address. The design must define what value the read output
+returns for this case.
+
+10. Which collision behavior does this design specify?
+
+Read-first: on a same-address simultaneous read and write, `rd_data` receives
+the old stored value, while the memory stores `wr_data` after the edge.
+
+11. Why does nonblocking assignment implement read-first behavior here?
+
+Nonblocking assignment right-hand sides are evaluated using the values that
+existed before the nonblocking updates take effect. Thus `rd_data <= mem[rd_addr]`
+reads the old word, while `mem[wr_addr] <= wr_data` schedules the new word for
+update at the end of the time step.
+
+12. What should happen when read and write are both enabled but use different
+addresses?
+
+The read output receives the old contents of `mem[rd_addr]`, and the write
+updates `mem[wr_addr]`. The two operations proceed independently.
+
+13. How would write-first behavior differ?
+
+For a same-address collision, the read output would receive the newly supplied
+`wr_data` instead of the old memory value. The RTL would need to explicitly
+forward the write data to the output or use a supported memory mode.
+
+14. How would no-change collision behavior differ?
+
+During a same-address collision, `rd_data` would keep its previous value,
+while the memory write still occurs. This differs from read-first, which
+returns the old contents of the addressed word.
+
+15. Is assigning `rd_data <= rd_data` necessary to hold its value?
+
+No. In a clocked process, omitting an assignment to a register on a branch
+means it retains its value. Explicit self-assignment is generally redundant;
+keeping the no-read branch empty can make the intended enable behavior clearer.
+
+16. What does the `DEPTH` and `WIDTH` parameterization provide?
+
+It allows the memory depth and word width to be changed without rewriting the
+whole module. The address width is derived with `$clog2(DEPTH)`. The design
+should constrain depth to a supported value; depth 1 needs special handling
+because `$clog2(1)` is zero, and a non-power-of-two depth leaves some binary
+addresses unused.
+
+17. Why might resetting all memory contents affect memory inference?
+
+Many FPGA block RAMs and ASIC memory macros cannot clear every stored bit with
+a reset signal. Resetting the whole array can prevent use of those resources,
+leading to register-and-mux logic or an unsupported implementation. The exact
+result depends on the target technology and synthesis tool.
+
+Synthesis and implementation
+----------------------------
+
+18. What hardware might this RTL infer?
+
+Depending on the target and tool, it may map to a memory block or macro, or to
+registers and multiplexers. Memory inference depends on coding style, port
+configuration, reset requirements, and device resources; RTL alone does not
+guarantee a particular implementation.
+
+19. What are the benefits of having independent read and write ports?
+
+A read and a write can happen on the same clock edge, potentially increasing
+throughput and avoiding the need to time-multiplex one port. The tradeoff is
+more interface and collision behavior to specify and verify, and possibly
+higher hardware cost.
+
+20. How could byte enables be added?
+
+Add one write-enable bit for each byte lane. On a write edge, update only the
+selected byte lanes and retain the others. Check that the target memory
+resource supports the desired write granularity.
+
+Testbench and verification
+--------------------------
+
+21. What role does the testbench's reference memory play?
+
+It records expected contents independently of the DUT and predicts what a read
+should return. The testbench compares `rd_data` with that expected value after
+the read edge.
+
+22. How should same-address read-first behavior be tested?
+
+First write a known old value to an address. Then, on one rising edge, enable
+both ports, set `rd_addr` and `wr_addr` to that address, and provide a
+different new value. Check that `rd_data` is the old value after that edge.
+On a later read, check that the new value was stored.
+
+23. How should simultaneous access to different addresses be tested?
+
+Write a distinct new value to one address while reading a different address on
+the same edge. Check that `rd_data` returns the old contents of the read
+address, then read the write address later and confirm the new value was stored.
+
+24. How can the testbench verify that `rd_data` holds when `re` is low?
+
+First establish a known `rd_data` with a read. Then disable `re`, change
+`rd_addr`, and check after one or more rising edges that `rd_data` is unchanged.
+Repeat with `we` high to confirm that writes do not alter the read output when
+reading is disabled.
+
+25. How can the testbench verify that no write occurs when `we` is low?
+
+Attempt a write with `we` low, then enable reading and read that address. It
+should still contain its previous value. Ensure the address had a known old
+value so the result is meaningful.
+
+26. Why should comparisons use case equality (`===`)?
+
+Case equality treats X and Z as values and always returns a known true or
+false. An unexpected unknown in the DUT output therefore produces a clear
+mismatch against known expected data.
+
+27. What race can occur if the testbench updates its reference memory at the
+same clock edge as the DUT?
+
+If the testbench uses a blocking assignment in the same active event region as
+the DUT, ordering can become simulator-scheduling dependent, especially when
+calculating expected collision data. Capture the old expected value before
+the edge, compare the DUT output after nonblocking updates settle, and update
+the reference model in a controlled order or later simulation region.
+
+28. What corner cases should be covered for this RAM?
+
+Cover all addresses, boundary addresses 0 and 15, varied data values,
+overwrites, back-to-back operations, reads and writes to different addresses
+on the same edge, same-address collisions, output hold when `re` is low, and
+write suppression when `we` is low. Avoid expecting known values from
+unwritten locations.
+
+29. Does a passing testbench prove the design is correct?
+
+No. It establishes that the checked scenarios passed. Uncovered cases,
+incorrect assumptions shared by the DUT and reference model, and synthesis or
+physical implementation issues may remain. Review, lint, synthesis checks,
+and broader verification provide additional evidence.
+
+30. What is the difference between simulation X/Z values and physical memory
+contents?
+
+X and Z are four-state simulation values. X represents unknown or conflicting
+logic; Z represents high impedance. An unwritten memory location often appears
+as X in simulation, but X is not a physical voltage or a guaranteed stored
+value. Z is generally not a normal stored-memory data value.
