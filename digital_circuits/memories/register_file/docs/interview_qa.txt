@@ -1,0 +1,202 @@
+Register File: Interview Questions and Answers
+==============================================
+
+Fundamentals and interface
+--------------------------
+
+1. What is a register file?
+
+A register file is a small, addressable bank of words used for fast data
+storage. It commonly provides multiple read ports and one or more write ports
+so a datapath can access several operands efficiently.
+
+2. What does a 16 x 8 register file contain?
+
+It contains 16 words, each 8 bits wide, for 128 storage bits total.
+
+3. How many address bits are required for 16 words?
+
+Four address bits, because 2^4 = 16. The address range is 0 through 15.
+
+4. What does 2R1W mean?
+
+It means two read ports and one write port. This design has two independent
+read addresses and outputs, plus one write address, data input, and enable.
+
+5. Are the reads synchronous or asynchronous in this design?
+
+They are asynchronous. Continuous assignments connect each read output to the
+selected memory word, so the output follows its address without waiting for a
+clock edge.
+
+6. Is the write synchronous or asynchronous?
+
+It is synchronous. The memory is written only at the rising edge of `clk`,
+when `we` is high.
+
+7. Can both read ports read different words at the same time?
+
+Yes. Each read port has its own address and output, so both can select and
+return different memory words at once.
+
+8. What happens if both read addresses select the same word?
+
+Both outputs show the contents of that word. They are independent output paths
+but select the same stored value.
+
+9. Is address 0 hardwired to zero?
+
+No. In this specification, address 0 is ordinary writable storage. Some
+processor register files reserve address 0 as a constant zero, but this design
+does not.
+
+10. What happens if `we` is low at a rising edge?
+
+No memory word is written. The read ports continue to show the words selected
+by their current read addresses.
+
+11. What happens if the memory has not been initialized?
+
+Unwritten words have unknown (`X`) values in four-state simulation. The testbench
+must write a location before expecting known read data from it.
+
+Read/write timing
+-----------------
+
+12. What does a read port return when its address changes?
+
+It returns the contents of the newly selected word after combinational logic
+propagates. No clock edge is needed for the read address selection.
+
+13. What does a read port show if its address selects the word being written?
+
+Before the write edge, it shows the old contents. After the rising edge updates
+the memory and the nonblocking assignment takes effect, the asynchronous read
+output reflects the new contents. This behavior should be specified and
+verified.
+
+14. Is the read-during-write behavior the same as a synchronous RAM's
+read-first mode?
+
+Not exactly. This register file has asynchronous reads. It shows the old value
+before the write edge and follows the updated array to show the new value
+after the write update settles. A synchronous RAM's read-first mode samples and
+registers the old value at the edge.
+
+15. What is the role of nonblocking assignment in the write process?
+
+`mem[wr_addr] <= wr_data` schedules the memory update for the nonblocking
+assignment region at the end of the time step. This is the standard style for
+clocked sequential logic and avoids many simulation ordering problems.
+
+RTL and implementation
+----------------------
+
+16. Why are the read outputs declared as output nets rather than `reg`?
+
+They are driven by continuous `assign` statements, so Verilog net outputs are
+appropriate. If they were assigned inside a procedural block, they would need
+a variable type such as `reg` in Verilog or `logic` in SystemVerilog.
+
+17. What does the memory declaration mean?
+
+`reg [WIDTH-1:0] mem [0:DEPTH-1]` declares `DEPTH` words, each `WIDTH` bits
+wide. The first range is the word width; the second range is the array index.
+
+18. What do the `DEPTH` and `WIDTH` parameters provide?
+
+They allow the number of words and the bits per word to be changed at
+instantiation. Address widths are derived using `$clog2(DEPTH)`. The design
+should handle `DEPTH == 1` specially because `$clog2(1)` is zero; a
+non-power-of-two depth also has unused binary address combinations.
+
+19. What hardware might synthesis infer?
+
+It may infer a memory structure, a register array with read muxes, or
+technology-specific distributed memory. Two asynchronous read ports can limit
+inference into block-memory resources, so the result depends on the FPGA or ASIC
+library and synthesis tool.
+
+20. What are the tradeoffs of adding more read ports?
+
+More read ports let the circuit access more words in parallel, but they require
+more selection logic and can increase area, routing, and delay. Some memory
+blocks have limited port configurations; extra ports may require replicated
+storage or mux logic.
+
+21. How could this design be changed to use synchronous read ports?
+
+Register each read output on a clock edge, sampling its read address or data
+according to the chosen RAM template. This adds clocked read latency and can
+make block-memory inference easier. The exact latency must be documented.
+
+22. Why is the memory array not reset in this design?
+
+The spec has no reset, and resetting every memory bit can prevent inference of
+some FPGA block RAMs or ASIC memory macros. If reset behavior is needed, decide
+whether only control/output registers or the storage itself must be reset and
+check target technology support.
+
+Verification
+------------
+
+23. What role does a reference memory in the testbench serve?
+
+It records expected contents independently from the DUT. After writes, the
+testbench uses it to predict what each read port should return and compares
+that prediction with the outputs.
+
+24. How should the testbench verify both read ports work independently?
+
+Write known, different values to two addresses. Set port A to one address and
+port B to the other, then check both outputs at the same simulation time.
+Change one read address and confirm only its corresponding output changes.
+
+25. How should the testbench verify a write?
+
+Write a known value with `we` high at a rising edge, then select that address
+on one or both read ports and compare the outputs against the written value.
+Also read neighboring addresses to catch accidental writes to the wrong word.
+
+26. How should the testbench verify that writes are disabled when `we` is low?
+
+Attempt to write a different value with `we` low, then read that address and
+confirm its original value remains unchanged.
+
+27. How should the testbench verify same-address read/write timing?
+
+First store a known old value. Point a read port and the write port at that
+address, then check the old read value before the rising edge. Write a distinct
+new value on the edge and check that the asynchronous output changes to the
+new value after the memory update settles. A later read should still return
+the new value.
+
+28. Why should comparisons use case equality (`===`)?
+
+Case equality treats X and Z as values and always returns a known 0 or 1. An
+unknown DUT output therefore fails a comparison against known expected data,
+rather than making the comparison result unknown.
+
+29. What test cases are important for this register file?
+
+Write and read multiple locations, check addresses 0 and 15, read different
+and identical addresses on both ports, change each read address without a
+clock, overwrite data, suppress writes with `we` low, and read a word while
+writing that same word. Check that unwritten words are not assumed to contain
+known values.
+
+30. Can a passing testbench prove the design is correct?
+
+No. It proves only that the tested scenarios passed under the testbench's
+assumptions. Uncovered cases, an incorrect reference model, and synthesis or
+timing issues may remain. Code review, lint, synthesis checks, and broader
+verification provide additional evidence.
+
+31. What can go wrong if the testbench updates its reference array on the same
+clock edge as the DUT?
+
+A blocking reference-model update can race with DUT logic in the same
+simulation region. This matters especially when checking a same-address
+read/write case, where the expected old value must be captured before the
+write, and the model should be updated in a controlled order after that
+expectation is established.

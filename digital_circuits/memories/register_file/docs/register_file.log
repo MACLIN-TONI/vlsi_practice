@@ -1,0 +1,22 @@
+VCD info: dumpfile waves/dump.vcd opened for output.
+PASS | rd_addr_a = 0 | rd_data_a = ff | exp_rd_data_a = ff
+PASS | rd_addr_b = 1 | rd_data_b = 00 | exp_rd_data_b = 00
+PASS | rd_addr_a = 2 | rd_data_a = f0 | exp_rd_data_a = f0
+PASS | rd_addr_b = 3 | rd_data_b = 0f | exp_rd_data_b = 0f
+PASS | rd_addr_a = 4 | rd_data_a = aa | exp_rd_data_a = aa
+PASS | rd_addr_b = 5 | rd_data_b = 55 | exp_rd_data_b = 55
+PASS | rd_addr_a = 6 | rd_data_a = 10 | exp_rd_data_a = 10
+PASS | rd_addr_b = 7 | rd_data_b = 01 | exp_rd_data_b = 01
+PASS | rd_addr_a = 8 | rd_data_a = 80 | exp_rd_data_a = 80
+PASS | rd_addr_b = 9 | rd_data_b = 08 | exp_rd_data_b = 08
+PASS | rd_addr_a = a | rd_data_a = 9a | exp_rd_data_a = 9a
+PASS | rd_addr_b = b | rd_data_b = 9b | exp_rd_data_b = 9b
+PASS | rd_addr_a = c | rd_data_a = 9c | exp_rd_data_a = 9c
+PASS | rd_addr_b = d | rd_data_b = 9d | exp_rd_data_b = 9d
+PASS | rd_addr_a = e | rd_data_a = 9e | exp_rd_data_a = 9e
+PASS | rd_addr_b = f | rd_data_b = 9f | exp_rd_data_b = 9f
+PASS | address = 7 | rd_data_a = 01 | rd_data_b = 01
+SUMMARY
+PASS =          17
+FAIL =           0
+tb/tb_register_file.v:171: $finish called at 352000 (1ps)

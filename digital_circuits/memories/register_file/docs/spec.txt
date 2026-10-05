@@ -1,0 +1,72 @@
+16 x 8 Register File: RTL Specification
+========================================
+
+1. Module
+---------
+
+Module name: register_file
+
+2. Configuration
+----------------
+
+- Storage depth: 16 words.
+- Word width: 8 bits.
+- Write address width: 4 bits; valid addresses 0 through 15.
+- Each read address width: 4 bits; valid addresses 0 through 15.
+- One synchronous write port and two asynchronous read ports.
+- Address 0 is ordinary writable storage; it is not hardwired to zero.
+
+3. Interface
+------------
+
+Port       Direction  Width  Description
+---------  ---------  -----  ---------------------------------------------
+clk        input      1      Clock for writes; writes occur on rising edge.
+we         input      1      Write enable.
+wr_addr    input      4      Address of the word to write.
+wr_data    input      8      Data to write when we is high.
+rd_addr_a  input      4      Address selected by read port A.
+rd_data_a  output     8      Asynchronous data from read port A.
+rd_addr_b  input      4      Address selected by read port B.
+rd_data_b  output     8      Asynchronous data from read port B.
+
+4. Write behavior
+-----------------
+
+At each rising edge of clk:
+
+- If we == 1, write wr_data to mem[wr_addr].
+- If we == 0, leave all memory words unchanged.
+- There is no reset input and the memory array is not reset or initialized.
+
+5. Read behavior
+----------------
+
+- rd_data_a continuously reflects mem[rd_addr_a].
+- rd_data_b continuously reflects mem[rd_addr_b].
+- Read addresses do not need a clock edge to select data.
+- Changing one read address affects its corresponding output and does not
+  change the other read port's selection.
+- If a read address selects a word being written, the output reflects the old
+  stored value before the write edge and the new value after the write update
+  settles. The read outputs are combinational, not registered.
+
+6. Initialization
+-----------------
+
+- Initial contents of every word are unspecified (X in simulation).
+- A testbench must write a word before expecting known read data from it.
+- There is no hardwired-zero address in this version; address 0 can be written.
+
+7. Testbench requirements
+-------------------------
+
+- Write and read back multiple addresses, including 0 and 15.
+- Read two different addresses simultaneously and check both outputs.
+- Set both read addresses to the same word and check both outputs match.
+- Change each read address between clock edges and check its output follows.
+- Confirm that we == 0 prevents a write.
+- Overwrite a word and check both read ports return the new value.
+- Read a word on one or both ports while writing that same address; check the
+  outputs show the old data before the edge and the new data after it settles.
+- Do not expect defined values from locations that have not been written.
