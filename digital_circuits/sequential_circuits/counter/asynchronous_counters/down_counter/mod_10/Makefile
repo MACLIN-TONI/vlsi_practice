@@ -1,5 +1,5 @@
 DUT ?= mod_10
-RTL = rtl/$(DUT).v rtl/D.v 
+RTL = rtl/$(DUT).v rtl/JK.v 
 TB = tb/tb_$(DUT).v
 TOP = tb_$(DUT)
 SIM = sim/sim.out
